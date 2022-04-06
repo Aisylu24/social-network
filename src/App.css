@@ -2,32 +2,20 @@
     margin: 0 auto;
     display:grid;
     width: 100%;
-    height: 100%;
     grid-template-areas:
     "header header"
-    "nav content"
-
-;
+    "nav content";
 grid-template-rows: 60px 1fr;
     grid-template-columns: 2fr 10fr;
 }
 
-header {
-grid-area: header;
-    background-color: burlywood;
-}
 
-.header img {
-    width: 20px;
-}
-.nav {
-    grid-area: nav;
-    background-color: darkseagreen;
-
-}
 .content {
-    width:100%;
+
     grid-area: content;
     background-color: bisque;
 }
 
+.content img {
+    width: 300px;
+}
