@@ -1,8 +1,14 @@
-.content {
-    grid-area: content;
-    background-color: mistyrose;
-}
+/*.content {*/
+/*    grid-area: content;*/
+/*    background-color: mistyrose;*/
+/*}*/
 
-.content img {
-    width: 1000px;
+/*.content img {*/
+/*    width: 1000px;*/
+/*}*/
+
+
+.img {
+    height: 600px;
+    overflow: hidden;
 }
