@@ -3,13 +3,21 @@
     background-color: rosybrown;
     margin-right: 10px;
     margin-left: 10px;
-padding-left:5px;
+    padding:10px;
 }
 
-.item {
+.item a {
     color:white;
+    text-decoration: none ;
 }
 
-.item.active {
-    color: cadetblue;
+.item a.activeLink {
+    color: cadetblue ;
 }
+
+ /*a:focus {*/
+ /* color: cadetblue;*/
+ /*}*/
+
+
+
