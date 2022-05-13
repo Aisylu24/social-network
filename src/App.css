@@ -25,6 +25,7 @@ grid-template-rows: 80px 1fr;
 .app-wrapper-content {
     grid-area: content;
     background-color: mistyrose;
+
 }
 
 .content img {

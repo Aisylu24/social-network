@@ -8,3 +8,11 @@
     width: inherit;
     height: 50px;
 }
+
+.postsBlock {
+    padding: 10px;
+}
+
+.posts {
+    margin: 5px;
+}
