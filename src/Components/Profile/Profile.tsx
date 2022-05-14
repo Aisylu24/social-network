@@ -3,8 +3,9 @@ import MyPosts from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 
 export type ProfilePropsType = {
-    profileInfo?: any
-    posts: PostType[]
+    state: {
+        posts: PostType[]
+    }
 }
 export type PostType ={
     id: number
@@ -16,7 +17,7 @@ const Profile = (props:ProfilePropsType) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts posts={props.posts}/>
+            <MyPosts posts={props.state.posts}/>
         </div>
     )
 }
