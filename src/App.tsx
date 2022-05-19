@@ -32,7 +32,6 @@ function App() {
 
 
     return (
-        <BrowserRouter>
         <div className="app-wrapper">
             <Header/>
            <Navbar/>
@@ -46,8 +45,6 @@ function App() {
             </div>
 
         </div>
-        </BrowserRouter>
-
     );
 }
 
