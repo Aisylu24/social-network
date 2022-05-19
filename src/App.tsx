@@ -4,7 +4,7 @@ import Header from "./Components/Header/Header";
 import Navbar from "./Components/Navbar/Navbar";
 import Profile from "./Components/Profile/Profile";
 import Dialogs from "./Components/Dialogs/Dialogs";
-import {BrowserRouter,Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
     let state = {
         profilePage: {
             posts: [
-                {id: 1,message: 'Hi there', likesCount: 10},
+                {id: 1, message: 'Hi there', likesCount: 10},
                 {id: 2, message: 'My first post', likesCount: 25}
             ]
         },
@@ -22,24 +22,32 @@ function App() {
                 {id: 2, name: 'Guzel'},
                 {id: 3, name: 'Liza'}
             ],
-            messages:[
-                {id: 1,message: 'Hi'},
+            messages: [
+                {id: 1, message: 'Hi'},
                 {id: 2, message: 'What\'s up?'},
                 {id: 3, message: 'Are you ok?'}
             ]
         }
     }
 
+    let addPost = (postMessage: string) => {
+        let newPost = {
+            id: 5,
+            message: postMessage,
+            likesCount: 0
+        }
+        state.profilePage.posts.push(newPost)
+    }
 
     return (
         <div className="app-wrapper">
             <Header/>
-           <Navbar/>
+            <Navbar/>
 
             <div className={'app-wrapper-content'}>
                 <Routes>
-                    <Route path="/profile" element={<Profile state={state.profilePage}/>}/>
-                    <Route path="/dialogs/*" element= {<Dialogs state={state.messagesPage} />} />
+                    <Route path="/profile" element={<Profile state={state.profilePage} addPost={addPost}/>}/>
+                    <Route path="/dialogs/*" element={<Dialogs state={state.messagesPage}/>}/>
 
                 </Routes>
             </div>

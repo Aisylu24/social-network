@@ -5,6 +5,7 @@ import {PostType, ProfilePropsType} from "../Profile";
 
 type MyPostsPropsType = {
     posts: PostType[]
+    addPost: (post:string) => void
 }
 
 
@@ -15,11 +16,10 @@ const MyPosts = (props: MyPostsPropsType ) => {
     let newPostElement = useRef<HTMLTextAreaElement>(null)
 
     const addPost = () => {
-        if (newPostElement.current !== null) {
-            alert(newPostElement.current.value)
+        let text = newPostElement.current?.value
+        text && props.addPost(text)
         }
 
-    }
     return (
         <div className={s.postsBlock}>
            <h4>My posts</h4>
