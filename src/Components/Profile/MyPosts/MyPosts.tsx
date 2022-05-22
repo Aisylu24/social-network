@@ -5,27 +5,40 @@ import {PostType, ProfilePropsType} from "../Profile";
 
 type MyPostsPropsType = {
     posts: PostType[]
-    addPost: (post:string) => void
+    newPostText: string
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
 }
 
 
-const MyPosts = (props: MyPostsPropsType ) => {
+const MyPosts = (props: MyPostsPropsType) => {
 
-    let postElements = props.posts.map(p=> <Post message={p.message} likes={p.likesCount}/>)
+    let postElements = props.posts.map(p => <Post message={p.message} likes={p.likesCount}/>)
 
     let newPostElement = useRef<HTMLTextAreaElement>(null)
 
     const addPost = () => {
-        let text = newPostElement.current?.value
-        text && props.addPost(text)
+        if (newPostElement?.current?.value) {
+            props.addPost()
+            props.updateNewPostText('')
         }
+    }
+
+    const onPostChange = () => {
+        if (newPostElement?.current?.value) {
+        props.updateNewPostText(newPostElement.current.value)
+    }}
+
 
     return (
         <div className={s.postsBlock}>
-           <h4>My posts</h4>
+            <h4>My posts</h4>
             <div>
                 <div>
-                    <textarea ref={newPostElement}></textarea>
+                    <textarea ref={newPostElement}
+                              value={props.newPostText}
+                              onChange={onPostChange}
+                    />
                 </div>
                 <div>
                     <button onClick={addPost}>Add post</button>

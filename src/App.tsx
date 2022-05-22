@@ -2,42 +2,45 @@ import React from 'react';
 import './App.css';
 import Header from "./Components/Header/Header";
 import Navbar from "./Components/Navbar/Navbar";
-import Profile from "./Components/Profile/Profile";
+import Profile, {PostType} from "./Components/Profile/Profile";
 import Dialogs from "./Components/Dialogs/Dialogs";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import ReactDOM from "react-dom";
 
 
-function App() {
-
-    let state = {
+export type PropsType = {
+    state: {
         profilePage: {
-            posts: [
-                {id: 1, message: 'Hi there', likesCount: 10},
-                {id: 2, message: 'My first post', likesCount: 25}
-            ]
+            posts: PostType[],
+            newPostText: string
         },
         messagesPage: {
-            dialogs: [
-                {id: 1, name: 'Zarina'},
-                {id: 2, name: 'Guzel'},
-                {id: 3, name: 'Liza'}
-            ],
-            messages: [
-                {id: 1, message: 'Hi'},
-                {id: 2, message: 'What\'s up?'},
-                {id: 3, message: 'Are you ok?'}
-            ]
+            dialogs: DialogsType[],
+            messages: messagesType[]
         }
-    }
+    },
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
+}
 
-    let addPost = (postMessage: string) => {
-        let newPost = {
-            id: 5,
-            message: postMessage,
-            likesCount: 0
-        }
-        state.profilePage.posts.push(newPost)
-    }
+export type PostType = {
+    id: number
+    message: string
+    likesCount: number
+}
+
+export type DialogsType = {
+    id: number
+    name: string
+}
+
+export type messagesType = {
+    id: number
+    message: string
+}
+
+
+const App: React.FC<PropsType> = ({state, addPost, updateNewPostText}) => {
 
     return (
         <div className="app-wrapper">
@@ -46,7 +49,10 @@ function App() {
 
             <div className={'app-wrapper-content'}>
                 <Routes>
-                    <Route path="/profile" element={<Profile state={state.profilePage} addPost={addPost}/>}/>
+                    <Route path="/profile" element={<Profile
+                        state={state.profilePage}
+                        updateNewPostText={updateNewPostText}
+                        addPost={addPost}/>}/>
                     <Route path="/dialogs/*" element={<Dialogs state={state.messagesPage}/>}/>
 
                 </Routes>

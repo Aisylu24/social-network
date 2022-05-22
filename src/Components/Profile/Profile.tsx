@@ -5,20 +5,21 @@ import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 export type ProfilePropsType = {
     state: {
         posts: PostType[]
+        newPostText: string
     },
-    addPost: (post:string) => void
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
 }
-export type PostType = {
-    id: number
-    message: string
-    likesCount: number
-}
+
 
 const Profile = (props: ProfilePropsType) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts posts={props.state.posts} addPost={props.addPost}/>
+            <MyPosts posts={props.state.posts}
+                     updateNewPostText={props.updateNewPostText}
+                     newPostText={props.state.newPostText}
+                     addPost={props.addPost}/>
         </div>
     )
 }
