@@ -1,7 +1,8 @@
 import React, {useRef} from "react";
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {PostType, ProfilePropsType} from "../Profile";
+import {PostType} from "../../../redux/state";
+
 
 type MyPostsPropsType = {
     posts: PostType[]
@@ -20,7 +21,6 @@ const MyPosts = (props: MyPostsPropsType) => {
     const addPost = () => {
         if (newPostElement?.current?.value) {
             props.addPost()
-            props.updateNewPostText('')
         }
     }
 
@@ -28,7 +28,6 @@ const MyPosts = (props: MyPostsPropsType) => {
         if (newPostElement?.current?.value) {
         props.updateNewPostText(newPostElement.current.value)
     }}
-
 
     return (
         <div className={s.postsBlock}>

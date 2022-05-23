@@ -2,45 +2,21 @@ import React from 'react';
 import './App.css';
 import Header from "./Components/Header/Header";
 import Navbar from "./Components/Navbar/Navbar";
-import Profile, {PostType} from "./Components/Profile/Profile";
 import Dialogs from "./Components/Dialogs/Dialogs";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import ReactDOM from "react-dom";
+import Profile from "./Components/Profile/Profile";
+import {addPost, ProfilePageType, RootStateType, updateNewPostText} from "./redux/state";
+import {state} from "./redux/state";
 
 
-export type PropsType = {
-    state: {
-        profilePage: {
-            posts: PostType[],
-            newPostText: string
-        },
-        messagesPage: {
-            dialogs: DialogsType[],
-            messages: messagesType[]
-        }
-    },
+type AppPropsType = {
+    state: RootStateType
     addPost: () => void
     updateNewPostText: (newText: string) => void
 }
 
-export type PostType = {
-    id: number
-    message: string
-    likesCount: number
-}
-
-export type DialogsType = {
-    id: number
-    name: string
-}
-
-export type messagesType = {
-    id: number
-    message: string
-}
-
-
-const App: React.FC<PropsType> = ({state, addPost, updateNewPostText}) => {
+const App: React.FC<AppPropsType> = ({state, addPost,  updateNewPostText}) => {
 
     return (
         <div className="app-wrapper">
@@ -50,10 +26,10 @@ const App: React.FC<PropsType> = ({state, addPost, updateNewPostText}) => {
             <div className={'app-wrapper-content'}>
                 <Routes>
                     <Route path="/profile" element={<Profile
-                        state={state.profilePage}
+                        profilePage={state.profilePage}
                         updateNewPostText={updateNewPostText}
                         addPost={addPost}/>}/>
-                    <Route path="/dialogs/*" element={<Dialogs state={state.messagesPage}/>}/>
+                    <Route path="/dialogs/*" element={<Dialogs state={state.dialogsPage}/>}/>
 
                 </Routes>
             </div>
