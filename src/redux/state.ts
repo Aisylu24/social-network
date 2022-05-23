@@ -1,6 +1,3 @@
-import {rerenderEntireTree} from "../render";
-
-
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPage
@@ -35,7 +32,6 @@ export type DialogsPage = {
 
 export type SideBarType = {}
 
-
 export let state: RootStateType = {
     profilePage: {
         posts: [
@@ -59,6 +55,10 @@ export let state: RootStateType = {
     sidebar: {}
 }
 
+let rerenderEntireTree = () => {
+    console.log('state changed')
+}
+
 export let addPost = () => {
     let newPost = {
         id: 5,
@@ -67,11 +67,17 @@ export let addPost = () => {
     }
     state.profilePage.posts.push(newPost)
     state.profilePage.newPostText = ''
-    rerenderEntireTree(state)
+    rerenderEntireTree()
 }
 
 
 export let updateNewPostText = (newText:string) => {
     state.profilePage.newPostText = newText
-    rerenderEntireTree(state)
+    rerenderEntireTree()
 }
+
+export let subscribe = (observer: any) => {
+    rerenderEntireTree = observer
+}
+
+
