@@ -27,28 +27,44 @@ export let store = {
     _callSubscriber(_state: RootStateType)  {
         console.log('state changed')
     },
-    addPost()  {
-        let newPost = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber(this._state)
-    },
-    updateNewPostText(newText:string) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber(this._state)
-    },
     subscribe(observer: any)  {
         this._callSubscriber = observer
+    },
+    dispatch(action:ActionsType) {
+        if (action.type === 'ADD-POST') {
+            let newPost = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber(this._state)
+        }
+        else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(this._state)}
     }
 
 }
+export type ActionsType = addPostACType | updateNewPostTextACType
 
+export const addPostAC = () => {
+    return {
+        type: 'ADD-POST'
+    } as const
+}
 
+type addPostACType = ReturnType<typeof addPostAC>
 
+export const updateNewPostTextAC = (newText:string) => {
+    return {
+        type: 'UPDATE-NEW-POST-TEXT',
+        newText
+    } as const
+}
+
+type updateNewPostTextACType = ReturnType<typeof updateNewPostTextAC>
 
 
 export type RootStateType = {

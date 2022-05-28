@@ -3,20 +3,19 @@ import './App.css';
 import Header from "./Components/Header/Header";
 import Navbar from "./Components/Navbar/Navbar";
 import Dialogs from "./Components/Dialogs/Dialogs";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
-import ReactDOM from "react-dom";
+import {Routes, Route} from "react-router-dom";
+
 import Profile from "./Components/Profile/Profile";
-import {addPost, ProfilePageType, RootStateType, updateNewPostText} from "./redux/state";
-import {state} from "./redux/state";
+import {ActionsType, RootStateType} from "./redux/state";
+
 
 
 type AppPropsType = {
     state: RootStateType
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action:ActionsType)=> void
 }
 
-const App: React.FC<AppPropsType> = ({state, addPost,  updateNewPostText}) => {
+const App: React.FC<AppPropsType> = ({state, dispatch}) => {
 
     return (
         <div className="app-wrapper">
@@ -27,8 +26,8 @@ const App: React.FC<AppPropsType> = ({state, addPost,  updateNewPostText}) => {
                 <Routes>
                     <Route path="/profile" element={<Profile
                         profilePage={state.profilePage}
-                        updateNewPostText={updateNewPostText}
-                        addPost={addPost}/>}/>
+                        dispatch={dispatch}
+                    />}/>
                     <Route path="/dialogs/*" element={<Dialogs state={state.dialogsPage}/>}/>
 
                 </Routes>
