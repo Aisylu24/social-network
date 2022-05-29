@@ -1,10 +1,9 @@
-import {addPostACType, profileReducer, updateNewPostTextACType} from "./profile-redicer";
-import {addMessageACType, dialogsReducer, updateNewMessageACType} from "./dialogs-reducer";
+import {addPostAC, profileReducer, updateNewPostTextAC} from "./profile-redicer";
+import {addMessageAC, dialogsReducer, updateNewMessageAC} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 
-
-export let store = {
-    _state: <RootStateType>{
+export let store: StoreType = {
+    _state: {
         profilePage: {
             posts: [
                 {id: 1, message: 'Hi there', likesCount: 10},
@@ -27,13 +26,13 @@ export let store = {
         },
         sidebar: {}
     },
-    getState() {
-        return this._state
-    },
     _callSubscriber(_state: RootStateType) {
         console.log('state changed')
     },
-    subscribe(observer: any) {
+    getState() {
+        return this._state
+    },
+    subscribe(observer: (state: RootStateType) => void) {
         this._callSubscriber = observer
     },
     dispatch(action: ActionsType) {
@@ -44,10 +43,18 @@ export let store = {
     }
 }
 
-export type ActionsType = addPostACType
-    | updateNewPostTextACType
-    | addMessageACType
-    | updateNewMessageACType
+export type ActionsType = ReturnType<typeof addMessageAC>
+    | ReturnType<typeof updateNewMessageAC>
+    | ReturnType<typeof addPostAC>
+    | ReturnType<typeof updateNewPostTextAC>
+
+export type StoreType = {
+    _state: RootStateType
+    _callSubscriber: (_state: RootStateType) => void
+    getState: () => RootStateType
+    subscribe: (observer: (state: RootStateType) => void) => void
+    dispatch: (action: ActionsType) => void
+}
 
 export type RootStateType = {
     profilePage: ProfilePageType

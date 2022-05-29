@@ -3,9 +3,6 @@ import {ActionsType, DialogsPageType} from "./state";
 const ADD_MESSAGE = 'ADD-MESSAGE';
 const UPDATE_NEW_MESSAGE = 'UPDATE-NEW-MESSAGE';
 
-export type addMessageACType = ReturnType<typeof addMessageAC>
-export type updateNewMessageACType = ReturnType<typeof updateNewMessageAC>
-
 export const dialogsReducer = (state: DialogsPageType, action: ActionsType) => {
 
     switch (action.type) {
@@ -25,5 +22,5 @@ export const dialogsReducer = (state: DialogsPageType, action: ActionsType) => {
     }
 }
 
-const addMessageAC = () => ({type: ADD_MESSAGE} as const)
+export const addMessageAC = () => ({type: ADD_MESSAGE} as const)
 export const updateNewMessageAC = (newMessage: string) => ({type: UPDATE_NEW_MESSAGE, newMessage} as const)
