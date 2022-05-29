@@ -1,5 +1,7 @@
 const ADD_POST = 'ADD-POST';
+const ADD_MESSAGE = 'ADD-MESSAGE';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const UPDATE_NEW_MESSAGE = 'UPDATE-NEW-MESSAGE';
 
 export let store = {
     _state: <RootStateType>{
@@ -20,7 +22,8 @@ export let store = {
                 {id: 1, message: 'Hi'},
                 {id: 2, message: 'What\'s up?'},
                 {id: 3, message: 'Are you ok?'}
-            ]
+            ],
+            newMessage: ''
         },
         sidebar: {}
     },
@@ -46,22 +49,45 @@ export let store = {
         } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText
             this._callSubscriber(this._state)
+        } else if (action.type === ADD_MESSAGE) {
+            let newMessage = {
+                id: 4,
+                message: this._state.dialogsPage.newMessage,
+            }
+            this._state.dialogsPage.messages.push(newMessage)
+            this._state.dialogsPage.newMessage = ''
+            this._callSubscriber(this._state)
+
+        } else if (action.type === UPDATE_NEW_MESSAGE) {
+            this._state.dialogsPage.newMessage = action.newMessage
+            this._callSubscriber(this._state)
+
         }
     }
-
 }
-export type ActionsType = addPostACType | updateNewPostTextACType
+
+export type ActionsType = addPostACType
+    | updateNewPostTextACType
+    | addMessageACType
+    | updateNewMessageACType
 
 export const addPostAC = () => ({type: ADD_POST} as const)
-
 
 type addPostACType = ReturnType<typeof addPostAC>
 
 export const updateNewPostTextAC = (newText: string) =>
     ({type: UPDATE_NEW_POST_TEXT, newText} as const)
 
-
 type updateNewPostTextACType = ReturnType<typeof updateNewPostTextAC>
+
+export const addMessageAC = () => ({type: ADD_MESSAGE} as const)
+
+type addMessageACType = ReturnType<typeof addMessageAC>
+
+export const updateNewMessageAC = (newMessage: string) =>
+    ({type: UPDATE_NEW_MESSAGE, newMessage} as const)
+
+type updateNewMessageACType = ReturnType<typeof updateNewMessageAC>
 
 
 export type RootStateType = {
@@ -94,6 +120,7 @@ export type ProfilePageType = {
 export type DialogsPage = {
     dialogs: DialogsType[],
     messages: MessagesType[]
+    newMessage: string
 }
 
 export type SideBarType = {}

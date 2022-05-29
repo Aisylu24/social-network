@@ -28,7 +28,10 @@ const App: React.FC<AppPropsType> = ({state, dispatch}) => {
                         profilePage={state.profilePage}
                         dispatch={dispatch}
                     />}/>
-                    <Route path="/dialogs/*" element={<Dialogs state={state.dialogsPage}/>}/>
+                    <Route path="/dialogs/*" element={<Dialogs
+                        dispatch={dispatch}
+                        state={state.dialogsPage}
+                    />}/>
 
                 </Routes>
             </div>
