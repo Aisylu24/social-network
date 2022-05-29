@@ -1,37 +1,40 @@
+const ADD_POST = 'ADD-POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+
 export let store = {
-    _state: <RootStateType> {
-    profilePage: {
-        posts: [
-            {id: 1, message: 'Hi there', likesCount: 10},
-            {id: 2, message: 'My first post', likesCount: 25}
-        ],
-        newPostText: ''
+    _state: <RootStateType>{
+        profilePage: {
+            posts: [
+                {id: 1, message: 'Hi there', likesCount: 10},
+                {id: 2, message: 'My first post', likesCount: 25}
+            ],
+            newPostText: ''
+        },
+        dialogsPage: {
+            dialogs: [
+                {id: 1, name: 'Zarina'},
+                {id: 2, name: 'Guzel'},
+                {id: 3, name: 'Liza'}
+            ],
+            messages: [
+                {id: 1, message: 'Hi'},
+                {id: 2, message: 'What\'s up?'},
+                {id: 3, message: 'Are you ok?'}
+            ]
+        },
+        sidebar: {}
     },
-    dialogsPage: {
-        dialogs: [
-            {id: 1, name: 'Zarina'},
-            {id: 2, name: 'Guzel'},
-            {id: 3, name: 'Liza'}
-        ],
-        messages: [
-            {id: 1, message: 'Hi'},
-            {id: 2, message: 'What\'s up?'},
-            {id: 3, message: 'Are you ok?'}
-        ]
-    },
-    sidebar: {}
-},
     getState() {
         return this._state
     },
-    _callSubscriber(_state: RootStateType)  {
+    _callSubscriber(_state: RootStateType) {
         console.log('state changed')
     },
-    subscribe(observer: any)  {
+    subscribe(observer: any) {
         this._callSubscriber = observer
     },
-    dispatch(action:ActionsType) {
-        if (action.type === 'ADD-POST') {
+    dispatch(action: ActionsType) {
+        if (action.type === ADD_POST) {
             let newPost = {
                 id: 5,
                 message: this._state.profilePage.newPostText,
@@ -40,29 +43,23 @@ export let store = {
             this._state.profilePage.posts.push(newPost)
             this._state.profilePage.newPostText = ''
             this._callSubscriber(this._state)
-        }
-        else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText
-            this._callSubscriber(this._state)}
+            this._callSubscriber(this._state)
+        }
     }
 
 }
 export type ActionsType = addPostACType | updateNewPostTextACType
 
-export const addPostAC = () => {
-    return {
-        type: 'ADD-POST'
-    } as const
-}
+export const addPostAC = () => ({type: ADD_POST} as const)
+
 
 type addPostACType = ReturnType<typeof addPostAC>
 
-export const updateNewPostTextAC = (newText:string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        newText
-    } as const
-}
+export const updateNewPostTextAC = (newText: string) =>
+    ({type: UPDATE_NEW_POST_TEXT, newText} as const)
+
 
 type updateNewPostTextACType = ReturnType<typeof updateNewPostTextAC>
 
@@ -123,7 +120,6 @@ export type SideBarType = {}
 //     },
 //     sidebar: {}
 // }
-
 
 
 // export let addPost = () => {
