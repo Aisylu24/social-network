@@ -6,7 +6,7 @@ import Dialogs from "./Components/Dialogs/Dialogs";
 import {Routes, Route} from "react-router-dom";
 
 import Profile from "./Components/Profile/Profile";
-import {ActionsType, RootStateType} from "./redux/state";
+import {ActionsType, RootStateType} from "./redux/store";
 
 
 
