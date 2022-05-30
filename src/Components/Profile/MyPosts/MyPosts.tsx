@@ -1,29 +1,28 @@
 import React, {ChangeEvent} from "react";
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {addPostAC, updateNewPostTextAC} from "../../../redux/profile-redicer";
-import {ActionsType, PostType} from "../../../redux/store";
-
+import {PostType} from "../../../redux/store";
 
 
 type MyPostsPropsType = {
     posts: PostType[]
     newPostText: string
-    dispatch: (action: ActionsType)=> void
+    callBack: () => void
+    onChange: (newText: string) => void
 }
 
 
-const MyPosts = (props: MyPostsPropsType) => {
+const MyPosts: React.FC<MyPostsPropsType> = ({posts, callBack, onChange, newPostText}) => {
 
-    let postElements = props.posts.map(p => <Post message={p.message} likes={p.likesCount}/>)
+    let postElements = posts.map(p => <Post message={p.message} likes={p.likesCount}/>)
 
     const addPost = () => {
-            props.dispatch(addPostAC())
+        callBack()
     }
 
     const onPostChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         let newText = event.currentTarget.value
-        props.dispatch(updateNewPostTextAC(newText))
+        onChange(newText)
     }
 
     return (
@@ -32,8 +31,8 @@ const MyPosts = (props: MyPostsPropsType) => {
             <div>
                 <div>
                     <textarea
-                              value={props.newPostText}
-                              onChange={onPostChange}
+                        value={newPostText}
+                        onChange={onPostChange}
                     />
                 </div>
                 <div>
