@@ -14,27 +14,27 @@ type MessageType = {
 }
 
 type DialogPropsType = {
-    state: {
+    dialogsPage: {
         dialogs: DialogType[]
         messages: MessageType[]
         newMessage: string
     }
-    callBack: () => void
-    onChange: (newMessage: string) => void
+    onClickCallBack: () => void
+    onChangeCallBack: (newMessage: string) => void
 }
 
 const Dialogs = (props:DialogPropsType) => {
 
-    let dialogElements = props.state.dialogs.map(d=> <DialogItem name={d.name} id={d.id}/> )
-    let messageElements = props.state.messages.map(m=> <Message message={m.message}/> )
+    let dialogElements = props.dialogsPage.dialogs.map(d=> <DialogItem name={d.name} id={d.id}/> )
+    let messageElements = props.dialogsPage.messages.map(m=> <Message message={m.message}/> )
 
     const addMessage = () => {
-        props.callBack()
+        props.onClickCallBack()
     }
 
     const onMessageChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         let newMessage = event.currentTarget.value
-        props.onChange(newMessage)
+        props.onChangeCallBack(newMessage)
     }
 
     return (
@@ -47,7 +47,7 @@ const Dialogs = (props:DialogPropsType) => {
                 <div>
             <div><textarea
                 placeholder={'Enter your message'}
-                value={props.state.newMessage} onChange={onMessageChange}/></div>
+                value={props.dialogsPage.newMessage} onChange={onMessageChange}/></div>
             <div><button onClick={addMessage}>send</button></div>
                 </div>
             </div>

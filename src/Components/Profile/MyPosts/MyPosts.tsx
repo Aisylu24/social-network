@@ -7,22 +7,22 @@ import {PostType} from "../../../redux/store";
 type MyPostsPropsType = {
     posts: PostType[]
     newPostText: string
-    callBack: () => void
-    onChange: (newText: string) => void
+    onClickCallBack: () => void
+    onChangeCallBack: (newText: string) => void
 }
 
 
-const MyPosts: React.FC<MyPostsPropsType> = ({posts, callBack, onChange, newPostText}) => {
+const MyPosts: React.FC<MyPostsPropsType> = ({posts, onClickCallBack, onChangeCallBack, newPostText}) => {
 
     let postElements = posts.map(p => <Post message={p.message} likes={p.likesCount}/>)
 
     const addPost = () => {
-        callBack()
+        onClickCallBack()
     }
 
     const onPostChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         let newText = event.currentTarget.value
-        onChange(newText)
+        onChangeCallBack(newText)
     }
 
     return (
