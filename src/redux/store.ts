@@ -1,6 +1,7 @@
 import {addPostAC, profileReducer, updateNewPostTextAC} from "./profile-redicer";
 import {addMessageAC, dialogsReducer, updateNewMessageAC} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
+import {followAC, setUsersAC, unfollowAC} from "./users-reducer";
 
 export let store: StoreType = {
     _state: {
@@ -24,7 +25,15 @@ export let store: StoreType = {
             ],
             newMessage: ''
         },
-        sidebar: {}
+        sidebar: {},
+        usersPage: {
+            users: [
+                {id: 1, name: 'Ai',photoUrl: URL, followed: false, status: 'Have a nice day', location: {city: 'Kazan', country: 'Russia'}},
+                {id: 2, name: 'Di',photoUrl: URL, followed: true, status: 'Hi there', location: {city: 'Moscow', country: 'Russia'}},
+                {id: 3, name: 'Liza',photoUrl: URL, followed: true, status: 'Hallo', location: {city: 'Mexico', country: 'Mexica'}},
+
+            ],
+        }
     },
     _callSubscriber(_state: RootStateType) {
         console.log('state changed')
@@ -47,6 +56,9 @@ export type ActionsType = ReturnType<typeof addMessageAC>
     | ReturnType<typeof updateNewMessageAC>
     | ReturnType<typeof addPostAC>
     | ReturnType<typeof updateNewPostTextAC>
+    | ReturnType<typeof followAC>
+    | ReturnType<typeof unfollowAC>
+    | ReturnType<typeof setUsersAC>
 
 export type StoreType = {
     _state: RootStateType
@@ -60,6 +72,7 @@ export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     sidebar: SideBarType
+    usersPage: UserPageType
 }
 
 export type PostType = {
@@ -90,6 +103,20 @@ export type DialogsPageType = {
 }
 
 export type SideBarType = {}
+export type UserPageType = {
+    users: UserType[]
+}
 
+export type UserType = {
+    id: number,
+    name: string,
+    photoUrl: any,
+    followed: boolean
+    status: string
+    location: {
+        city: string,
+        country: string
+    }
+}
 
 

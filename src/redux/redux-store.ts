@@ -2,12 +2,20 @@ import {combineReducers, legacy_createStore} from "redux";
 import {profileReducer} from "./profile-redicer";
 import {dialogsReducer} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
+import {usersReducer} from "./users-reducer";
 
 
-let reducers = combineReducers({
+let rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
-    sidebar: sidebarReducer
+    sidebar: sidebarReducer,
+    usersPage: usersReducer
 })
 
-export let store = legacy_createStore(reducers)
+
+
+
+
+
+
+export let store = legacy_createStore(rootReducer)
