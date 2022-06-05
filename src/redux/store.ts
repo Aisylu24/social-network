@@ -1,4 +1,4 @@
-import {addPostAC, profileReducer, updateNewPostTextAC} from "./profile-redicer";
+import {addPostAC, profileReducer, updateNewPostTextAC} from "./profile-reducer";
 import {addMessageAC, dialogsReducer, updateNewMessageAC} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 import {followAC, setUsersAC, unfollowAC} from "./users-reducer";
@@ -68,46 +68,46 @@ export type StoreType = {
     dispatch: (action: ActionsType) => void
 }
 
-export type RootStateType = {
+type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     sidebar: SideBarType
     usersPage: UserPageType
 }
 
-export type PostType = {
+type PostType = {
     id: number
     message: string
     likesCount: number
 }
 
-export type DialogsType = {
+type DialogsType = {
     id: number
     name: string
 }
 
-export type MessagesType = {
-    id: number
-    message: string
-}
-
-export type ProfilePageType = {
+type ProfilePageType = {
     posts: PostType[],
     newPostText: string
 }
 
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: DialogsType[],
     messages: MessagesType[]
     newMessage: string
 }
 
-export type SideBarType = {}
-export type UserPageType = {
+type MessagesType = {
+    id: number
+    message: string
+}
+
+type SideBarType = {}
+type UserPageType = {
     users: UserType[]
 }
 
-export type UserType = {
+type UserType = {
     id: number,
     name: string,
     photoUrl: any,

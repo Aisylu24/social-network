@@ -1,8 +1,7 @@
 import React, {ChangeEvent} from "react";
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {PostType} from "../../../redux/store";
-
+import {PostType} from "../../../redux/profile-reducer";
 
 type MyPostsPropsType = {
     posts: PostType[]
@@ -10,7 +9,6 @@ type MyPostsPropsType = {
     onClickCallBack: () => void
     onChangeCallBack: (newText: string) => void
 }
-
 
 const MyPosts: React.FC<MyPostsPropsType> = ({posts, onClickCallBack, onChangeCallBack, newPostText}) => {
 

@@ -1,19 +1,11 @@
 import React from 'react'
-import { UserType} from "../../redux/store";
 import s from './users.module.css'
-
-
-type UsersPropsType = {
-    users: UserType[]
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
-    setUsers:(users: UserType[]) => void
-}
+import {UsersPropsType} from "./UsersContainer";
 
 
 export let Users=(props: UsersPropsType)=> {
 
-    if(props.users.length === 0) {
+    if(props.usersPage.users.length === 0) {
         props.setUsers([
             {id: 1, name: 'Ai',photoUrl: URL, followed: false, status: 'Have a nice day', location: {city: 'Kazan', country: 'Russia'}},
             {id: 2, name: 'Di',photoUrl: URL, followed: true, status: 'Hi there', location: {city: 'Moscow', country: 'Russia'}},
@@ -22,10 +14,9 @@ export let Users=(props: UsersPropsType)=> {
         ])
     }
 
-
     return <div>
         {
-            props.users.map (u=>
+            props.usersPage.users.map (u=>
                 <div key={u.id}>
                     <span>
                         <div>
