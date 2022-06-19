@@ -2,8 +2,7 @@ import React from 'react';
 import {addMessageAC, updateNewMessageAC} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
-import {ActionsType} from "../../redux/store";
-import {AppStateType} from "../../redux/redux-store";
+import {ActionsType, AppStateType} from "../../redux/redux-store";
 
 let mapStateToProps = (state: AppStateType)=> {
     return {

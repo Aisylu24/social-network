@@ -1,22 +1,16 @@
-import {ActionsType} from "./store";
+import {ActionsType} from "./redux-store";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
 
-const URL = 'https://i.pinimg.com/474x/f0/4a/f7/f04af7e5380bc7b9defd08bbf8756306.jpg'
-
-
 export type UserType = {
+    followed: boolean
     id: number,
     name: string,
-    photoUrl: any,
-    followed: boolean
-    status: string
-    location: {
-        city: string,
-        country: string
-    }
+    photos: {small: null | string, large: null | string}
+    status: null | string
+    uniqueUrlName: null | string
 }
 
 export type InitialStateType = {
@@ -24,12 +18,7 @@ export type InitialStateType = {
 }
 
 let initialState:InitialStateType = {
-    users: [
-        {id: 1, name: 'Ai',photoUrl: URL, followed: false, status: 'Have a nice day', location: {city: 'Kazan', country: 'Russia'}},
-        {id: 2, name: 'Di',photoUrl: URL, followed: true, status: 'Hi there', location: {city: 'Moscow', country: 'Russia'}},
-        {id: 3, name: 'Liza',photoUrl: URL, followed: true, status: 'Hallo', location: {city: 'Mexico', country: 'Mexico'}},
-
-    ],
+    users: []
 }
 
 export const usersReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -43,6 +32,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
         }
         case SET_USERS: {
             return {...state, users: [...state.users, ...action.users]}
+            // return {...state, users: action.users.map(u => u)}
         }
         default:
             return state

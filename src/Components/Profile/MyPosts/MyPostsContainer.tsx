@@ -2,8 +2,7 @@ import React from "react";
 import {addPostAC, updateNewPostTextAC} from "../../../redux/profile-reducer";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
-import {ActionsType} from "../../../redux/store";
-import {AppStateType} from "../../../redux/redux-store";
+import {ActionsType, AppStateType} from "../../../redux/redux-store";
 
 let mapStateToProps = (state: AppStateType) => {
     return {
