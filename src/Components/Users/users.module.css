@@ -1,3 +1,11 @@
 .photo {
 width: 100px;
 }
+
+.selected {
+    font-weight: bold;
+}
+
+.pages {
+    cursor: pointer;
+}

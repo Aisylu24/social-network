@@ -2,7 +2,7 @@ import {combineReducers, legacy_createStore} from "redux";
 import {addPostAC, profileReducer, updateNewPostTextAC} from "./profile-reducer";
 import {addMessageAC, dialogsReducer, updateNewMessageAC} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
-import {followAC, setUsersAC, unfollowAC, usersReducer} from "./users-reducer";
+import {followAC, setCurrentPageAC, setTotalCountAC, setUsersAC, unfollowAC, usersReducer} from "./users-reducer";
 
 
 let rootReducer = combineReducers({
@@ -24,3 +24,6 @@ export type ActionsType = ReturnType<typeof addMessageAC>
     | ReturnType<typeof followAC>
     | ReturnType<typeof unfollowAC>
     | ReturnType<typeof setUsersAC>
+    | ReturnType<typeof setCurrentPageAC>
+    | ReturnType<typeof setTotalCountAC>
+
