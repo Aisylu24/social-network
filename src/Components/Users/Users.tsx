@@ -1,60 +1,44 @@
-import React from "react";
+import React from 'react';
 import s from "./users.module.css";
-import axios from "axios";
 import {UserType} from "../../redux/users-reducer";
-import {UsersPropsType} from "./UsersContainer";
-
 
 const URL = 'https://i.pinimg.com/474x/f0/4a/f7/f04af7e5380bc7b9defd08bbf8756306.jpg'
 
-type UsersResponseType = {
-    error: null | string
-    items: Array<UserType>
-    totalCount: number
+type UsersPropsType = {
+    users: UserType[]
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    callBack: (page: number)=> void
+
 }
 
-export class Users extends React.Component<UsersPropsType> {
+const Users = (props: UsersPropsType) => {
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+    let pages = []
 
-    componentDidMount() {
-        if (this.props.usersPage.users.length === 0) {
-            axios.get<UsersResponseType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
-                console.log(response)
-                this.props.setUsers(response.data.items)
-                this.props.setTotalCount(response.data.totalCount)
-            })
-        }
+    for (let i = 1; i <= pagesCount; i++) {
+        //  if (pages.length < 10)
+        pages.push(i)
+
     }
 
-    onPageChanged = (page: number) => {
-        this.props.setCurrentPage(page)
-        axios.get<UsersResponseType>(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`).then(response => {
-            console.log(response)
-            this.props.setUsers(response.data.items)
-        })
-    }
+    let curP = props.currentPage;
+    let curPF = ((curP - 5) < 0) ?  0  : curP - 5 ;
+    let curPL = curP + 5;
+    let slicedPages = pages.slice( curPF, curPL);
 
-    render() {
-        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
-        let pages = []
 
-        for (let i = 1; i <= pagesCount; i++) {
-          //  if (pages.length < 10)
-                pages.push(i)
-
-        }
-
-        let curP = this.props.currentPage;
-        let curPF = ((curP - 5) < 0) ?  0  : curP - 5 ;
-        let curPL = curP + 5;
-        let slicedPages = pages.slice( curPF, curPL);
-
-        return <div>
+    return (
+        <div>
             <div className={s.pages}>
                 {
                     slicedPages.map(page => {
-                        return <span className={this.props.currentPage === page ? s.selected : ""}
+                        return <span className={props.currentPage === page ? s.selected : ""}
                                      onClick={(e) => {
-                                         this.onPageChanged(page)
+                                         props.callBack(page)
                                      }}>{page}</span>
                     })
                 }
@@ -62,7 +46,7 @@ export class Users extends React.Component<UsersPropsType> {
 
             {
 
-                this.props.usersPage.users.map(u =>
+                props.users.map(u =>
                         <div key={u.id}>
                     <span>
                         <div>
@@ -72,10 +56,10 @@ export class Users extends React.Component<UsersPropsType> {
                            {
                                u.followed ?
                                    <button onClick={() => {
-                                       this.props.unfollow(u.id)
+                                       props.unfollow(u.id)
                                    }}>Unfollow</button>
                                    : <button onClick={() => {
-                                       this.props.follow(u.id)
+                                       props.follow(u.id)
                                    }}>Follow</button>
                            }
                         </div>
@@ -90,6 +74,7 @@ export class Users extends React.Component<UsersPropsType> {
                 )
             }
         </div>
-    }
-}
+    );
+};
 
+export default Users;
