@@ -3,12 +3,12 @@ import {addPostAC, profileReducer, updateNewPostTextAC} from "./profile-reducer"
 import {addMessageAC, dialogsReducer, updateNewMessageAC} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 import {
-    followAC,
-    setCurrentPageAC,
-    setTotalCountAC,
-    setUsersAC,
-    switchFetchingAC,
-    unfollowAC,
+    follow,
+    setCurrentPage,
+    setTotalCount,
+    setUsers,
+    switchFetching,
+    unfollow,
     usersReducer
 } from "./users-reducer";
 
@@ -29,10 +29,10 @@ export type ActionsType = ReturnType<typeof addMessageAC>
     | ReturnType<typeof updateNewMessageAC>
     | ReturnType<typeof addPostAC>
     | ReturnType<typeof updateNewPostTextAC>
-    | ReturnType<typeof followAC>
-    | ReturnType<typeof unfollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setCurrentPageAC>
-    | ReturnType<typeof setTotalCountAC>
-    | ReturnType<typeof switchFetchingAC>
+    | ReturnType<typeof follow>
+    | ReturnType<typeof unfollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalCount>
+    | ReturnType<typeof switchFetching>
 

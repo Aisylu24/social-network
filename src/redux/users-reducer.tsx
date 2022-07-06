@@ -11,7 +11,7 @@ export type UserType = {
     followed: boolean
     id: number,
     name: string,
-    photos: {small: null | string, large: null | string}
+    photos: { small: null | string, large: null | string }
     status: null | string
     uniqueUrlName: null | string
 }
@@ -24,10 +24,10 @@ export type InitialStateType = {
     isFetching: boolean
 }
 
-let initialState:InitialStateType = {
+let initialState: InitialStateType = {
     users: [],
     pageSize: 10,
-    totalUsersCount:0,
+    totalUsersCount: 0,
     currentPage: 2,
     isFetching: true
 }
@@ -59,12 +59,12 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
     }
 }
 
-export const followAC = (userId: number) => ({type: FOLLOW, userId} as const)
-export const unfollowAC = (userId: number) => ({type: UNFOLLOW, userId} as const)
-export const setUsersAC = (users: UserType[]) => ({type: SET_USERS, users} as const)
-export const setCurrentPageAC = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
-export const setTotalCountAC= (totalCount: number) => ({type: SET_TOTAL_COUNT, totalCount} as const)
-export const switchFetchingAC= (isFetching:boolean) => ({type: SWITCH_FETCHING, isFetching } as const)
+export const follow = (userId: number) => ({type: FOLLOW, userId} as const)
+export const unfollow = (userId: number) => ({type: UNFOLLOW, userId} as const)
+export const setUsers = (users: UserType[]) => ({type: SET_USERS, users} as const)
+export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
+export const setTotalCount = (totalCount: number) => ({type: SET_TOTAL_COUNT, totalCount} as const)
+export const switchFetching = (isFetching: boolean) => ({type: SWITCH_FETCHING, isFetching} as const)
 
 
 

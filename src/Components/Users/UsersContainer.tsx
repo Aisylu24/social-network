@@ -1,10 +1,10 @@
 import React from 'react'
 import {connect} from "react-redux";
 import {
-    followAC,
-    setCurrentPageAC, setTotalCountAC,
-    setUsersAC, switchFetchingAC,
-    unfollowAC,
+    follow,
+    setCurrentPage, setTotalCount,
+    setUsers, switchFetching,
+    unfollow,
     UserType
 } from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/redux-store";
@@ -89,10 +89,10 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 }
 
 export default connect(mapStateToProps,  {
-    follow: followAC,
-    unfollow: unfollowAC,
-    setUsers: setUsersAC,
-    setCurrentPage: setCurrentPageAC,
-    setTotalCount: setTotalCountAC,
-    switchFetching: switchFetchingAC
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setTotalCount,
+    switchFetching
     })(UsersAPI)
