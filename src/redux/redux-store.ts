@@ -1,5 +1,5 @@
 import {combineReducers, legacy_createStore} from "redux";
-import {addPostAC, profileReducer, updateNewPostTextAC} from "./profile-reducer";
+import {addPostAC, profileReducer, setUserProfile, updateNewPostTextAC} from "./profile-reducer";
 import {addMessageAC, dialogsReducer, updateNewMessageAC} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 import {
@@ -35,4 +35,5 @@ export type ActionsType = ReturnType<typeof addMessageAC>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalCount>
     | ReturnType<typeof switchFetching>
+    | ReturnType<typeof setUserProfile>
 

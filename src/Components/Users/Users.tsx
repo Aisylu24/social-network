@@ -1,6 +1,7 @@
 import React from 'react';
 import s from "./users.module.css";
 import {UserType} from "../../redux/users-reducer";
+import {NavLink} from "react-router-dom";
 
 const URL = 'https://i.pinimg.com/474x/f0/4a/f7/f04af7e5380bc7b9defd08bbf8756306.jpg'
 
@@ -49,8 +50,11 @@ const Users = (props: UsersPropsType) => {
                 props.users.map(u =>
                         <div key={u.id}>
                     <span>
+                        
                         <div>
+                            <NavLink to={'/profile/' + u.id}>
                             <img alt={'photo'} src={u.photos.small != null ? u.photos.small : URL} className={s.photo}/>
+                            </NavLink>
                         </div>
                         <div>
                            {

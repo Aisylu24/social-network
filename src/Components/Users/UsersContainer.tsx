@@ -27,6 +27,7 @@ export class UsersAPI extends React.Component<UsersContainerPropsType> {
         if (this.props.users.length === 0) {
             axios.get<UsersResponseType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
                 .then(response => {
+                    console.log(response)
                     this.props.switchFetching(false)
                     this.props.setUsers(response.data.items)
                     this.props.setTotalCount(response.data.totalCount)
@@ -59,7 +60,7 @@ export class UsersAPI extends React.Component<UsersContainerPropsType> {
     }
 }
 
-export type MapStatePropsType = {
+type MapStatePropsType = {
     users: UserType[]
     pageSize: number
     totalUsersCount: number
@@ -67,7 +68,7 @@ export type MapStatePropsType = {
     isFetching: boolean
 }
 
-export type MapDispatchPropsType = {
+type MapDispatchPropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     setUsers: (users: Array<UserType>) => void
