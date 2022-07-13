@@ -11,13 +11,15 @@ import {
     unfollow,
     usersReducer
 } from "./users-reducer";
+import {authReducer, setAuthUserData} from "./auth-reducer";
 
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer,
-    usersPage: usersReducer
+    usersPage: usersReducer,
+    auth: authReducer
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>
@@ -36,4 +38,8 @@ export type ActionsType = ReturnType<typeof addMessageAC>
     | ReturnType<typeof setTotalCount>
     | ReturnType<typeof switchFetching>
     | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setAuthUserData>
 
+
+
+window.store = store
