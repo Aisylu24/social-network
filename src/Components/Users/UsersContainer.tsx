@@ -19,13 +19,14 @@ type UsersResponseType = {
     totalCount: number
 }
 
+type UsersContainerPropsType = MapStatePropsType & MapDispatchPropsType
 
-export class UsersAPI extends React.Component<UsersContainerPropsType> {
+class UsersApi extends React.Component<UsersContainerPropsType> {
 
     componentDidMount() {
         this.props.switchFetching(true)
         if (this.props.users.length === 0) {
-            axios.get<UsersResponseType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            axios.get<any>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
                 .then(response => {
                     console.log(response)
                     this.props.switchFetching(false)
@@ -47,8 +48,7 @@ export class UsersAPI extends React.Component<UsersContainerPropsType> {
 
     render() {
         return <>
-            {this.props.isFetching ?
-                <Preloader/> : null}
+            {this.props.isFetching ? <Preloader/> : null}
             <Users users={this.props.users}
                    totalUsersCount={this.props.totalUsersCount}
                    currentPage={this.props.currentPage}
@@ -77,8 +77,6 @@ type MapDispatchPropsType = {
     switchFetching: (isFetching: boolean) => void
 }
 
-export type UsersContainerPropsType = MapStatePropsType & MapDispatchPropsType
-
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         users: state.usersPage.users,
@@ -89,11 +87,12 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-export default connect(mapStateToProps,  {
+
+export const UsersContainer = connect(mapStateToProps,  {
     follow,
     unfollow,
     setUsers,
     setCurrentPage,
     setTotalCount,
     switchFetching
-    })(UsersAPI)
+    })(UsersApi)
