@@ -1,4 +1,4 @@
-import {combineReducers, legacy_createStore} from "redux";
+import {combineReducers,  createStore} from "redux";
 import {addPostAC, profileReducer, setUserProfile, updateNewPostTextAC} from "./profile-reducer";
 import {addMessageAC, dialogsReducer, updateNewMessageAC} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
@@ -25,7 +25,7 @@ let rootReducer = combineReducers({
 export type AppStateType = ReturnType<typeof rootReducer>
 
 
-export let store = legacy_createStore(rootReducer)
+export let store = createStore(rootReducer)
 
 export type ActionsType = ReturnType<typeof addMessageAC>
     | ReturnType<typeof updateNewMessageAC>
@@ -42,4 +42,4 @@ export type ActionsType = ReturnType<typeof addMessageAC>
 
 
 
-window.store = store
+// window.store = store
