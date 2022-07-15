@@ -13,8 +13,9 @@ type UsersPropsType = {
     currentPage: number
     follow: (userId: number) => void
     unfollow: (userId: number) => void
-    callBack: (page: number) => void
-
+    onPageChangedHandler: (page: number) => void
+    switchFollowingProgress: (isFollowingProgress: boolean, userId: number) => void
+    isFollowing: number[]
 }
 
 const Users = (props: UsersPropsType) => {
@@ -40,7 +41,7 @@ const Users = (props: UsersPropsType) => {
                     slicedPages.map(page => {
                         return <span className={props.currentPage === page ? s.selected : ""}
                                      onClick={(e) => {
-                                         props.callBack(page)
+                                         props.onPageChangedHandler(page)
                                      }}>{page}</span>
                     })
                 }
@@ -60,18 +61,25 @@ const Users = (props: UsersPropsType) => {
                         <div>
                            {
                                u.followed ?
-                                   <button onClick={() => {
+                                   <button disabled={props.isFollowing.includes(u.id)} onClick={() => {
+                                       debugger
+                                       props.switchFollowingProgress(true, u.id) // процесс идет(true), айди появлется в массиве и кнопка блокируется
                                        followAPI.unfollowUser(u.id)
                                            .then(data => {
-                                               if (data.data.resultCode === 0)
+                                               if (data.resultCode === 0) {
                                                    props.unfollow(u.id)
+                                               }
+                                               props.switchFollowingProgress(false,u.id) //  процесс закончлся(false), айди появлется в массиве и кнопка разблокируется
                                            })
                                    }}>Unfollow</button>
-                                   : <button onClick={() => {
+                                   : <button disabled={props.isFollowing.includes(u.id)} onClick={() => {
+                                       props.switchFollowingProgress(true,u.id)
                                        followAPI.followUser(u.id)
                                            .then(data => {
-                                               if (data.resultCode === 0)
+                                               if (data.resultCode === 0) {
                                                    props.follow(u.id)
+                                               }
+                                               props.switchFollowingProgress(false,u.id)
                                            })
                                    }}>Follow</button>
                            }

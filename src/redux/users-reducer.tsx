@@ -6,6 +6,7 @@ const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT';
 const SWITCH_FETCHING = 'SWITCH_FETCHING';
+const SWITCH_FOLLOWING_PROGRESS = 'SWITCH_FOLLOWING_PROGRESS';
 
 export type UserType = {
     followed: boolean
@@ -22,6 +23,7 @@ export type InitialStateType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    isFollowing: number[]
 }
 
 let initialState: InitialStateType = {
@@ -29,7 +31,8 @@ let initialState: InitialStateType = {
     pageSize: 10,
     totalUsersCount: 0,
     currentPage: 2,
-    isFetching: true
+    isFetching: true,
+    isFollowing: []
 }
 
 export const usersReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -54,6 +57,13 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
         case SWITCH_FETCHING: {
             return {...state, isFetching: action.isFetching}
         }
+        case SWITCH_FOLLOWING_PROGRESS: {
+            return {
+                ...state, isFollowing: action.isFollowingProgress
+                    ? [...state.isFollowing, action.userId]
+                    : state.isFollowing.filter(id => id !== action.userId)
+            }
+        }
         default:
             return state
     }
@@ -65,6 +75,11 @@ export const setUsers = (users: UserType[]) => ({type: SET_USERS, users} as cons
 export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
 export const setTotalCount = (totalCount: number) => ({type: SET_TOTAL_COUNT, totalCount} as const)
 export const switchFetching = (isFetching: boolean) => ({type: SWITCH_FETCHING, isFetching} as const)
+export const switchFollowingProgress = (isFollowingProgress: boolean, userId: number) => ({
+    type: SWITCH_FOLLOWING_PROGRESS,
+    isFollowingProgress,
+    userId
+} as const)
 
 
 

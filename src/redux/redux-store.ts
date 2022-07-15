@@ -7,7 +7,7 @@ import {
     setCurrentPage,
     setTotalCount,
     setUsers,
-    switchFetching,
+    switchFetching, switchFollowingProgress,
     unfollow,
     usersReducer
 } from "./users-reducer";
@@ -39,6 +39,7 @@ export type ActionsType = ReturnType<typeof addMessageAC>
     | ReturnType<typeof switchFetching>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setAuthUserData>
+    | ReturnType<typeof switchFollowingProgress>
 
 
 
