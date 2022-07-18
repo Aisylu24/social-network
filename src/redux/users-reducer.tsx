@@ -1,5 +1,5 @@
 import {ActionsType} from "./redux-store";
-
+import {usersAPI} from "../api/api";
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -69,8 +69,8 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
     }
 }
 
-export const follow = (userId: number) => ({type: FOLLOW, userId} as const)
-export const unfollow = (userId: number) => ({type: UNFOLLOW, userId} as const)
+export const setFollow = (userId: number) => ({type: FOLLOW, userId} as const)
+export const setUnfollow = (userId: number) => ({type: UNFOLLOW, userId} as const)
 export const setUsers = (users: UserType[]) => ({type: SET_USERS, users} as const)
 export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
 export const setTotalCount = (totalCount: number) => ({type: SET_TOTAL_COUNT, totalCount} as const)
@@ -81,5 +81,45 @@ export const switchFollowingProgress = (isFollowingProgress: boolean, userId: nu
     userId
 } as const)
 
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+const thunk = (dispatch: (action:ActionsType)=> void) => {
+    dispatch(switchFetching(true))
+
+    //if (this.props.users.length === 0) {
+    usersAPI.getUsers(currentPage,pageSize)
+        .then(data => {
+            dispatch(setCurrentPage(currentPage))
+            dispatch(switchFetching(false))
+            dispatch(setUsers(data.items))
+            dispatch(setTotalCount(data.totalCount))
+        })}
+    return thunk
+}
+
+export const followThunkCreator = (userId: number) => {
+    const thunk = (dispatch: (action:ActionsType)=> void) => {
+        dispatch(switchFollowingProgress(true,userId))
+        usersAPI.followUser(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(setFollow(userId))
+                }
+                dispatch(switchFollowingProgress(false,userId))
+            })}
+        return thunk
+    }
+
+export const unfollowThunkCreator = (userId: number) => {
+    const thunk = (dispatch: (action:ActionsType)=> void) => {
+        dispatch(switchFollowingProgress(true,userId))
+        usersAPI.unfollowUser(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(setUnfollow(userId))
+                }
+                dispatch(switchFollowingProgress(false,userId))
+            })}
+        return thunk
+    }
 
 

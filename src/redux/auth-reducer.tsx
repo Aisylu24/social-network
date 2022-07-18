@@ -1,4 +1,5 @@
 import {ActionsType} from "./redux-store";
+import {authMeAPI} from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -29,5 +30,16 @@ export const authReducer = (state: DataStateType = initialState, action: Actions
 
 export const setAuthUserData = (data: DataStateType) => ({type: SET_USER_DATA, data} as const)
 
+export const authMeThunkCreator = () => {
+    const thunk = (dispatch: (action:ActionsType)=> void) => {
+        authMeAPI.authMe()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(setAuthUserData(data.data))
+                }
+            })
+    }
+    return thunk
+}
 
 

@@ -1,30 +1,22 @@
 import React from "react";
 import Header from "./Header";
-import {DataStateType, setAuthUserData} from "../../redux/auth-reducer";
+import {authMeThunkCreator} from "../../redux/auth-reducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {authMeAPI} from "../../api/api";
-
 
 export type MapStatePropsType = {
     isAuth: boolean
     userLogin: null | string
 }
 export type MapDispatchPropsType = {
-    setAuthUserData: (data: DataStateType) => void
+    authMeThunkCreator: () => void
 }
 
 type HeaderContainerPropsType = MapStatePropsType & MapDispatchPropsType
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
-        authMeAPI.authMe()
-            .then(data => {
-                if (data.resultCode === 0) {
-                    this.props.setAuthUserData(data.data)
-                }
-
-            })
+    this.props.authMeThunkCreator()
     }
 
     render() {
@@ -38,4 +30,4 @@ const mapStateToProps = (state: AppStateType) => ({
     userLogin: state.auth.userLogin
 })
 
-export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {setAuthUserData})(HeaderContainer)
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {authMeThunkCreator})(HeaderContainer)
