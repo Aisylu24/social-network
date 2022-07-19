@@ -27,7 +27,7 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
 
 const mapStateToProps = (state: AppStateType) => ({
     isAuth: state.auth.isAuth,
-    userLogin: state.auth.userLogin
+    userLogin: state.auth.login
 })
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {authMeThunkCreator})(HeaderContainer)

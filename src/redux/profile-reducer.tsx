@@ -80,6 +80,9 @@ export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE
 
 export const getUserProfileThunkCreator = (userIdFromParams: string | undefined) => {
     const thunk = (dispatch: (action:ActionsType)=> void) => {
+        if(!userIdFromParams) {
+            userIdFromParams = '2'
+        }
         profileAPI.getUserProfile(userIdFromParams)
             .then(data => {
               dispatch(setUserProfile(data))

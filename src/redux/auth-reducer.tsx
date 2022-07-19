@@ -4,16 +4,16 @@ import {authMeAPI} from "../api/api";
 const SET_USER_DATA = 'SET_USER_DATA';
 
 export type DataStateType = {
-    userId: null | number
-    userEmail: null | string
-    userLogin: null |string
+    id: null | number
+    email: null | string
+    login: null |string
     isAuth: boolean
 }
 
 let initialState: DataStateType = {
-    userId: null,
-    userEmail: null,
-    userLogin: null,
+    id: null,
+    email: null,
+    login: null,
     isAuth: false
 }
 
@@ -21,6 +21,7 @@ export const authReducer = (state: DataStateType = initialState, action: Actions
 
     switch (action.type) {
         case SET_USER_DATA: {
+            console.log(action.data)
             return {...state, ...action.data, isAuth: true}
         }
         default:
