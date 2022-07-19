@@ -3,10 +3,11 @@ import {connect} from "react-redux";
 import Profile from "./Profile";
 import {getUserProfileThunkCreator, ProfileType} from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
-import {Params, useParams} from "react-router-dom";
+import {Navigate, Params, useParams} from "react-router-dom";
 
 type MapStatePropsType = {
     profile: ProfileType | null
+    isAuth: boolean
 }
 type MapDispatchPropsType = {
     getUserProfileThunkCreator: (userIdFromParams: string | undefined) => void
@@ -21,11 +22,11 @@ type ProfileRequestContainerPropsType = MapStatePropsType & MapDispatchPropsType
 class ProfileRequestContainer extends React.Component<ProfileRequestContainerPropsType> {
 
     componentDidMount() {
-this.props.getUserProfileThunkCreator(this.props.params.userId)
+        this.props.getUserProfileThunkCreator(this.props.params.userId)
     }
 
-    render()
-    {
+    render() {
+        if (!this.props.isAuth) return <Navigate to="/login"/>
         return (
             <div>
                 <Profile profile={this.props.profile}/>
@@ -35,7 +36,8 @@ this.props.getUserProfileThunkCreator(this.props.params.userId)
 }
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
-profile: state.profilePage.profile
+    profile: state.profilePage.profile,
+    isAuth: state.auth.isAuth
 })
 
 type WithUrlDataContainerComponentType = MapStatePropsType & MapDispatchPropsType
