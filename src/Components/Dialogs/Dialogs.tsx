@@ -1,8 +1,7 @@
-import React, {ChangeEvent, useEffect} from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
-import { useNavigate} from "react-router-dom";
 
 type DialogType = {
     id: number
@@ -22,7 +21,6 @@ type DialogPropsType = {
     }
     onClickCallBack: () => void
     onChangeCallBack: (newMessage: string) => void
-    isAuth: boolean
 }
 
 const Dialogs = (props:DialogPropsType) => {
@@ -38,14 +36,6 @@ const Dialogs = (props:DialogPropsType) => {
         let newMessage = event.currentTarget.value
         props.onChangeCallBack(newMessage)
     }
-
-    let navigate = useNavigate()
-
-    useEffect(()=>{
-        if(!props.isAuth){
-            return navigate("../login")
-        }
-    }, [props.isAuth])
 
     return (
         <div className={s.dialogs}>

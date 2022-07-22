@@ -3,11 +3,11 @@ import {connect} from "react-redux";
 import Profile from "./Profile";
 import {getUserProfileThunkCreator, ProfileType} from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
-import {Navigate, Params, useParams} from "react-router-dom";
+import {Params, useParams} from "react-router-dom";
+import {withAuthNavigate} from "../hoc/withAuthNavigate";
 
 type MapStatePropsType = {
     profile: ProfileType | null
-    isAuth: boolean
 }
 type MapDispatchPropsType = {
     getUserProfileThunkCreator: (userIdFromParams: string | undefined) => void
@@ -19,6 +19,10 @@ type paramsType = {
 
 type ProfileRequestContainerPropsType = MapStatePropsType & MapDispatchPropsType & paramsType
 
+let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
+    profile: state.profilePage.profile,
+})
+
 class ProfileRequestContainer extends React.Component<ProfileRequestContainerPropsType> {
 
     componentDidMount() {
@@ -26,7 +30,6 @@ class ProfileRequestContainer extends React.Component<ProfileRequestContainerPro
     }
 
     render() {
-        if (!this.props.isAuth) return <Navigate to="/login"/>
         return (
             <div>
                 <Profile profile={this.props.profile}/>
@@ -35,15 +38,13 @@ class ProfileRequestContainer extends React.Component<ProfileRequestContainerPro
     }
 }
 
-let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
-    profile: state.profilePage.profile,
-    isAuth: state.auth.isAuth
-})
+const AuthNavigateComponent = withAuthNavigate(ProfileRequestContainer)
 
-type WithUrlDataContainerComponentType = MapStatePropsType & MapDispatchPropsType
+type WithUrlDataContainerComponentPropsType = MapStatePropsType & MapDispatchPropsType
 
-const WithUrlDataContainerComponent = (props: WithUrlDataContainerComponentType) => {
-    return <ProfileRequestContainer {...props} params={useParams<'userId'>()}/>
+const WithUrlDataContainerComponent = (props: WithUrlDataContainerComponentPropsType) => {
+    let params = useParams<'userId'>()
+    return <AuthNavigateComponent {...props} params={params}/>
 }
 
 export const ProfileContainer = connect(mapStateToProps, {getUserProfileThunkCreator})(WithUrlDataContainerComponent)
