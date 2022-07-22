@@ -1,13 +1,14 @@
-import React from "react";
+import React, {ComponentType} from "react";
 import {connect} from "react-redux";
 import Profile from "./Profile";
 import {getUserProfileThunkCreator, ProfileType} from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Params, useParams} from "react-router-dom";
 import {withAuthNavigate} from "../hoc/withAuthNavigate";
+import {compose} from "redux";
 
 type MapStatePropsType = {
-    profile: ProfileType | null
+    profile: ProfileType | null // ReturnType<typeof mapStateToProps>
 }
 type MapDispatchPropsType = {
     getUserProfileThunkCreator: (userIdFromParams: string | undefined) => void
@@ -38,13 +39,21 @@ class ProfileRequestContainer extends React.Component<ProfileRequestContainerPro
     }
 }
 
-const AuthNavigateComponent = withAuthNavigate(ProfileRequestContainer)
-
 type WithUrlDataContainerComponentPropsType = MapStatePropsType & MapDispatchPropsType
 
-const WithUrlDataContainerComponent = (props: WithUrlDataContainerComponentPropsType) => {
-    let params = useParams<'userId'>()
-    return <AuthNavigateComponent {...props} params={params}/>
+const WithUrlDataContainerComponent = (Component: ComponentType<ProfileRequestContainerPropsType>) => {
+    console.log('hello')
+    debugger
+    function ComponentWithParams(props: WithUrlDataContainerComponentPropsType) {
+        debugger
+        return <Component {...props} params={useParams<'userId'>()}/>
+    }
+
+    return ComponentWithParams
 }
 
-export const ProfileContainer = connect(mapStateToProps, {getUserProfileThunkCreator})(WithUrlDataContainerComponent)
+export const ProfileContainer = compose<ComponentType>(
+    connect(mapStateToProps, {getUserProfileThunkCreator}),
+    WithUrlDataContainerComponent,
+    withAuthNavigate // const AuthNavigateComponent = withAuthNavigate(ProfileRequestContainer)
+)(ProfileRequestContainer)

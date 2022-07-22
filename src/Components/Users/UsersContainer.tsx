@@ -6,6 +6,7 @@ import {AppStateType} from "../../redux/redux-store";
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
 import {compose} from "redux";
+import {withAuthNavigate} from "../hoc/withAuthNavigate";
 
 type UsersContainerPropsType = MapStateToPropsType & MapDispatchPropsType
 
@@ -68,4 +69,6 @@ export default compose<React.ComponentType>(
     connect<MapStateToPropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
         switchFollowingProgress,
         getUsersThunkCreator, followThunkCreator, unfollowThunkCreator
-    }))(UsersContainer)
+    }),
+    withAuthNavigate
+)(UsersContainer)

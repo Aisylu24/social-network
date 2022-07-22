@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {addMessageAC, updateNewMessageAC} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {ActionsType, AppStateType} from "../../redux/redux-store";
 import {withAuthNavigate} from "../hoc/withAuthNavigate";
+import {compose} from "redux";
 
 let mapStateToProps = (state: AppStateType)=> {
     return {
@@ -22,6 +23,7 @@ let mapDispatchToProps = (dispatch: (action: ActionsType) => void) => {
     }
 }
 
-const AuthNavigateComponent = withAuthNavigate(Dialogs)
-
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthNavigateComponent)
+export const DialogsContainer = compose<ComponentType>(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthNavigate // const AuthNavigateComponent = withAuthNavigate(Dialogs)
+)(Dialogs)
