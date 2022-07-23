@@ -16,7 +16,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 //type ConnectedNavigateComponent =
 
 export function withAuthNavigate<T>(Component: ComponentType<T>): ComponentType<T> {
-debugger
     const NavigateComponent = (props: MapStateToPropsType) => {
 
         let {isAuth, ...restProps} = props
@@ -32,6 +31,5 @@ debugger
         return <Component {...restProps as T}/>
     }
     let ConnectedNavigateComponent = connect(mapStateToProps)(NavigateComponent)
-    console.log(typeof ConnectedNavigateComponent)
    return ConnectedNavigateComponent
 }

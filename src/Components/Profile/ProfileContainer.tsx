@@ -42,10 +42,7 @@ class ProfileRequestContainer extends React.Component<ProfileRequestContainerPro
 type WithUrlDataContainerComponentPropsType = MapStatePropsType & MapDispatchPropsType
 
 const WithUrlDataContainerComponent = (Component: ComponentType<ProfileRequestContainerPropsType>) => {
-    console.log('hello')
-    debugger
     function ComponentWithParams(props: WithUrlDataContainerComponentPropsType) {
-        debugger
         return <Component {...props} params={useParams<'userId'>()}/>
     }
 
