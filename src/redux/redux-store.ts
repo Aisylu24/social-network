@@ -13,6 +13,7 @@ import {
 } from "./users-reducer";
 import {authReducer, setAuthUserData} from "./auth-reducer";
 import thunkMiddleware from 'redux-thunk'
+import {reducer as formReducer} from 'redux-form'
 
 
 let rootReducer = combineReducers({
@@ -20,7 +21,8 @@ let rootReducer = combineReducers({
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer,
     usersPage: usersReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>
@@ -45,4 +47,5 @@ export type ActionsType = ReturnType<typeof addMessageAC>
 
 
 
-// window.store = store
+// @ts-ignore
+window.store = store
