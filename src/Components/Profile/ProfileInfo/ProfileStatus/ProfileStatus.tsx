@@ -1,13 +1,12 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 
 type ProfileStatusPropsType = {
     status: string
     updateUserStatus: (status: string) => void
 }
 
-
 const ProfileStatus = (props: ProfileStatusPropsType) => {
-
+    console.log('render')
     const [state, setState] = useState({editMode: false, status: props.status})
 
     const activateEditMode = () => {
@@ -20,8 +19,13 @@ const ProfileStatus = (props: ProfileStatusPropsType) => {
     }
 
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setState({...state, status: e.currentTarget.value})
+            setState({...state, status: e.currentTarget.value})
     }
+
+    useEffect(() => {
+        console.log('eff');
+        setState({...state, status: props.status})
+    }, [props.status])
 
     return (
         <div>
@@ -34,7 +38,11 @@ const ProfileStatus = (props: ProfileStatusPropsType) => {
             }
             {state.editMode &&
                 <div>
-                    <input onChange={onStatusChange} value={state.status} autoFocus={true} onBlur={deactivateEditMode}/>
+                    <input
+                        onChange={onStatusChange}
+                        value={state.status}
+                        autoFocus={true}
+                        onBlur={deactivateEditMode}/>
                 </div>
             }
         </div>

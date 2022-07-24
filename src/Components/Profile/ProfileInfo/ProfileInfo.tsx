@@ -1,7 +1,7 @@
 import React from "react";
 import s from './ProfileInfo.module.css'
 import {ProfileType} from "../../../redux/profile-reducer";
-import ProfileStatus from "./ProfileStatus";
+import ProfileStatus from "./ProfileStatus/ProfileStatus";
 
 const userWithoutPhoto = 'https://i.pinimg.com/474x/f0/4a/f7/f04af7e5380bc7b9defd08bbf8756306.jpg'
 
@@ -23,7 +23,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
             <div className={s.descriptionBlock}>
                 <img src={props.profile?.photos.large || userWithoutPhoto} alt={'user photo'}/>
                 <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
-
+                {/*<ProfileStatusWithClass status={props.status} updateUserStatus={props.updateUserStatus}/>*/}
             </div>
         </div>
     )
