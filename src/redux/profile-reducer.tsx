@@ -1,10 +1,10 @@
 import {ActionsType} from "./redux-store";
 import {profileAPI} from "../api/api";
 
-
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_STATUS = 'SET_STATUS';
 
 export type ProfileType = {
     "aboutMe": string,
@@ -32,6 +32,7 @@ export type ProfilePageType = {
     posts: PostType[],
     newPostText: string
     profile: ProfileType | null
+    status: string
 }
 
 export type PostType = {
@@ -46,7 +47,8 @@ let initialState:ProfilePageType = {
         {id: 2, message: 'My first post', likesCount: 25}
     ],
     newPostText: '',
-    profile: null
+    profile: null,
+    status: ""
 }
 
 export const profileReducer = (state:ProfilePageType = initialState, action: ActionsType):ProfilePageType => {
@@ -69,6 +71,9 @@ export const profileReducer = (state:ProfilePageType = initialState, action: Act
         case SET_USER_PROFILE: {
             return {...state, profile: action.profile}
         }
+        case SET_STATUS: {
+            return {...state, status: action.status}
+        }
         default:
             return state
     }
@@ -77,17 +82,39 @@ export const profileReducer = (state:ProfilePageType = initialState, action: Act
 export const addPostAC = () => ({type: ADD_POST} as const)
 export const updateNewPostTextAC = (newText: string) => ({type: UPDATE_NEW_POST_TEXT, newText} as const)
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
+export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
 
 export const getUserProfileThunkCreator = (userIdFromParams: string | undefined) => {
     const thunk = (dispatch: (action:ActionsType)=> void) => {
         if(!userIdFromParams) {
-            userIdFromParams = '2'
+            userIdFromParams = '24346'
         }
         profileAPI.getUserProfile(userIdFromParams)
             .then(data => {
               dispatch(setUserProfile(data))
             })
 
+    }
+    return thunk
+}
+export const getUserStatusThunkCreator = (userIdFromParams: string | undefined) => {
+    const thunk = (dispatch: (action:ActionsType)=> void) => {
+        profileAPI.getUserStatus(userIdFromParams)
+            .then(data => {
+              dispatch(setStatus(data))
+            })
+    }
+    return thunk
+}
+
+export const updateUserStatusThunkCreator = (status: string) => {
+    const thunk = (dispatch: (action:ActionsType)=> void) => {
+        profileAPI.updateStatus(status)
+            .then(data => {
+                if(data.resultCode === 0) {
+                    dispatch(setStatus(status))
+                }
+            })
     }
     return thunk
 }

@@ -1,7 +1,12 @@
 import React, {ComponentType} from "react";
 import {connect} from "react-redux";
 import Profile from "./Profile";
-import {getUserProfileThunkCreator, ProfileType} from "../../redux/profile-reducer";
+import {
+    getUserProfileThunkCreator,
+    getUserStatusThunkCreator,
+    ProfileType,
+    updateUserStatusThunkCreator
+} from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Params, useParams} from "react-router-dom";
 import {withAuthNavigate} from "../hoc/withAuthNavigate";
@@ -9,9 +14,12 @@ import {compose} from "redux";
 
 type MapStatePropsType = {
     profile: ProfileType | null // ReturnType<typeof mapStateToProps>
+    status: string
 }
 type MapDispatchPropsType = {
     getUserProfileThunkCreator: (userIdFromParams: string | undefined) => void
+    getUserStatusThunkCreator: (userIdFromParams: string | undefined) => void
+    updateUserStatusThunkCreator: (status: string) => void
 }
 
 type paramsType = {
@@ -22,18 +30,20 @@ type ProfileRequestContainerPropsType = MapStatePropsType & MapDispatchPropsType
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.profilePage.profile,
+    status: state.profilePage.status
 })
 
 class ProfileRequestContainer extends React.Component<ProfileRequestContainerPropsType> {
 
     componentDidMount() {
         this.props.getUserProfileThunkCreator(this.props.params.userId)
+        this.props.getUserStatusThunkCreator(this.props.params.userId)
     }
 
     render() {
         return (
             <div>
-                <Profile profile={this.props.profile}/>
+                <Profile profile={this.props.profile} status={this.props.status} updateUserStatus={this.props.updateUserStatusThunkCreator}/>
             </div>
         )
     }
@@ -50,7 +60,7 @@ const WithUrlDataContainerComponent = (Component: ComponentType<ProfileRequestCo
 }
 
 export const ProfileContainer = compose<ComponentType>(
-    connect(mapStateToProps, {getUserProfileThunkCreator}),
+    connect(mapStateToProps, {getUserProfileThunkCreator,getUserStatusThunkCreator, updateUserStatusThunkCreator}),
     WithUrlDataContainerComponent,
     withAuthNavigate // const AuthNavigateComponent = withAuthNavigate(ProfileRequestContainer)
 )(ProfileRequestContainer)

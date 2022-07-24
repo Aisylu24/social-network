@@ -3,7 +3,7 @@ import s from "./users.module.css";
 import {UserType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
 
-const URL = 'https://i.pinimg.com/474x/f0/4a/f7/f04af7e5380bc7b9defd08bbf8756306.jpg'
+const userWithoutPhoto = 'https://i.pinimg.com/474x/f0/4a/f7/f04af7e5380bc7b9defd08bbf8756306.jpg'
 
 type UsersPropsType = {
     users: UserType[]
@@ -52,7 +52,7 @@ const Users = (props: UsersPropsType) => {
                         
                         <div>
                             <NavLink to={'/profile/' + u.id}>
-                            <img alt={'photo'} src={u.photos.small != null ? u.photos.small : URL} className={s.photo}/>
+                            <img alt={'photo'} src={u.photos.small != null ? u.photos.small : userWithoutPhoto} className={s.photo}/>
                             </NavLink>
                         </div>
                         <div>
