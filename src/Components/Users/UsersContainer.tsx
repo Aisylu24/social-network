@@ -6,7 +6,7 @@ import {AppStateType} from "../../redux/redux-store";
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
 import {compose} from "redux";
-import {withAuthNavigate} from "../hoc/withAuthNavigate";
+import {withAuthNavigate} from "../../hoc/withAuthNavigate";
 
 type UsersContainerPropsType = MapStateToPropsType & MapDispatchPropsType
 

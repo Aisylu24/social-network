@@ -3,7 +3,7 @@ import {addMessageAC} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {ActionsType, AppStateType} from "../../redux/redux-store";
-import {withAuthNavigate} from "../hoc/withAuthNavigate";
+import {withAuthNavigate} from "../../hoc/withAuthNavigate";
 import {compose} from "redux";
 
 let mapStateToProps = (state: AppStateType)=> {

@@ -9,7 +9,7 @@ import {
 } from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Params, useParams} from "react-router-dom";
-import {withAuthNavigate} from "../hoc/withAuthNavigate";
+import {withAuthNavigate} from "../../hoc/withAuthNavigate";
 import {compose} from "redux";
 
 type MapStatePropsType = {
