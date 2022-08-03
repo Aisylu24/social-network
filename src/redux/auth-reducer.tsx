@@ -1,5 +1,6 @@
 import {ActionsType} from "./redux-store";
 import {authMeAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -21,7 +22,6 @@ export const authReducer = (state: DataStateType = initialState, action: Actions
 
     switch (action.type) {
         case SET_USER_DATA: {
-            console.log(action.payload, 'payload')
             return {...state, ...action.payload}
         }
         default:
@@ -35,8 +35,6 @@ export const getAuthUserDataThunkCreator = () => {
     const thunk = (dispatch: (action:ActionsType)=> void) => {
         authMeAPI.authMe()
             .then(data => {
-                console.log(data, 'authApi');
-                console.log({...data.data}, 'data.data')
                 if (data.resultCode === 0) {
                     dispatch(setAuthUserData({...data.data, isAuth: true}))
                 }
@@ -45,12 +43,16 @@ export const getAuthUserDataThunkCreator = () => {
     return thunk
 }
 
-export const loginThunkCreator = (email:string, login:string, rememberMe:boolean) => (dispatch: (action: (dispatch: (action: ActionsType) => void) => void) => void) => {
+export const loginThunkCreator = (email:string, login:string, rememberMe:boolean) => (dispatch:any)  => {
+
         authMeAPI.login(email, login, rememberMe)
             .then(data => {
-                console.log(data)
+                console.log(data);
                 if (data.resultCode === 0) {
                     dispatch(getAuthUserDataThunkCreator())
+                } else {
+                    let message = data.messages.length > 0 ? data.messages[0] : 'Some error'
+                    dispatch(stopSubmit('login', {_error: message}))
                 }
             })
     }

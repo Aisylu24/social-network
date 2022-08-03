@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {loginThunkCreator, logoutThunkCreator} from "../../redux/auth-reducer";
 import {useNavigate} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
+import s from "../common/FormsControls/FormControls.module.css"
 
 type FormDataType = {
     email: string
@@ -14,7 +15,7 @@ type FormDataType = {
 }
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props: any) => {
-       
+
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -25,9 +26,12 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props: any) => {
                 <Field elementType={'input'} component={Element} name={'password'} placeholder={'Password'}
                        validate={[required]} type={'password'}/>
             </div>
-            <div>
-                <Field component={Element} elementType={'input'} name={'rememberMe'} type={'checkbox'} /> remember me
+            <div>remember me
+                <Field component={Element} elementType={'input'} name={'rememberMe'} type={'checkbox'} />
             </div>
+            {
+                props.error && <div className={s.formError}>{props.error}</div>
+            }
             <div>
                 <button>Login</button>
             </div>
@@ -38,7 +42,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props: any) => {
 
 
 const ReduxLoginForm = reduxForm<FormDataType>({
-    form: 'Login'
+    form: 'login'
 })(LoginForm)
 
 
@@ -47,7 +51,6 @@ type LoginPropsType = MapDispatchToProps & MapStateToPropsType
 const Login = (props: LoginPropsType) => {
 
     const onSubmit = (formData: FormDataType) => {
-        console.log(formData, 'formData');
         props.loginThunkCreator(formData.email, formData.password, formData.rememberMe)
     }
 

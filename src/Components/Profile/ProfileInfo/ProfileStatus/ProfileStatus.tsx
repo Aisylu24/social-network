@@ -6,7 +6,6 @@ type ProfileStatusPropsType = {
 }
 
 const ProfileStatus = (props: ProfileStatusPropsType) => {
-    console.log('render')
     const [state, setState] = useState({editMode: false, status: props.status})
 
     const activateEditMode = () => {
@@ -23,7 +22,6 @@ const ProfileStatus = (props: ProfileStatusPropsType) => {
     }
 
     useEffect(() => {
-        console.log('eff');
         setState({...state, status: props.status})
     }, [props.status])
 

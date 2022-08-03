@@ -15,6 +15,8 @@ import {compose} from "redux";
 type MapStatePropsType = {
     profile: ProfileType | null // ReturnType<typeof mapStateToProps>
     status: string
+    isAuthUserId: number | null
+    isAuth: boolean | null
 }
 type MapDispatchPropsType = {
     getUserProfileThunkCreator: (userIdFromParams: string | undefined) => void
@@ -30,12 +32,19 @@ type ProfileRequestContainerPropsType = MapStatePropsType & MapDispatchPropsType
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    isAuthUserId: state.auth.id,
+    isAuth: state.auth.isAuth
+
 })
 
 class ProfileRequestContainer extends React.Component<ProfileRequestContainerPropsType> {
 
     componentDidMount() {
+        // let userId = this.props.params.userId // string
+        // if(!userId) {
+        //  userId = this.props.isAuthUserId // number
+        // // }
         this.props.getUserProfileThunkCreator(this.props.params.userId)
         this.props.getUserStatusThunkCreator(this.props.params.userId)
     }

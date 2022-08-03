@@ -39,7 +39,6 @@ export const authMeAPI = {
            
         return instance.post('auth/login', {email, password, rememberMe})
             .then((response) => {
-                console.log(response.data)
                 return response.data
             })
     },

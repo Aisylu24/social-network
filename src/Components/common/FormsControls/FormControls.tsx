@@ -9,7 +9,6 @@ type ElementPropsType = {
 }
 
 export const Element:React.FC<ElementPropsType> = ({input, meta, elementType, ...restProps }) => {
-    console.log({...input}, 'input')
     const hasError = meta.touched && meta.error
     return (
         <div className={`${s.formControl} ${hasError ? s.error : ''}`}>

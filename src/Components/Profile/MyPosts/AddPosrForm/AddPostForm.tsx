@@ -6,7 +6,6 @@ import {Element} from "../../../common/FormsControls/FormControls";
 const maxLength10 = maxLengthCreator(10)
 
 const AddPostForm = (props: any) => {
-    console.log(props)
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
