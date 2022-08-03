@@ -20,11 +20,11 @@ export const usersAPI = {
         return instance.get<UsersResponseType>(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => response.data)
     },
-    followUser(userId:number) {
+    followUser(userId: number) {
         return instance.post(`follow/${userId}`)
             .then(response => response.data)
     },
-    unfollowUser(userId:number) {
+    unfollowUser(userId: number) {
         return instance.delete(`follow/${userId}`)
             .then(response => response.data)
     }
@@ -34,19 +34,31 @@ export const authMeAPI = {
     authMe() {
         return instance.get('auth/me')
             .then(response => response.data)
+    },
+    login(email: string, password: string, rememberMe= false) {
+           
+        return instance.post('auth/login', {email, password, rememberMe})
+            .then((response) => {
+                console.log(response.data)
+                return response.data
+            })
+    },
+    logout() {
+        return instance.delete('auth/login')
+            .then(response => response.data)
     }
 }
 
 export const profileAPI = {
-    getUserProfile(userId:string| undefined) {
+    getUserProfile(userId: string | undefined) {
         return instance.get(`profile/${userId}`)
             .then(response => response.data)
     },
-    getUserStatus(userId:string| undefined) {
+    getUserStatus(userId: string | undefined) {
         return instance.get(`profile/status/${userId}`)
             .then(response => response.data)
-},
-    updateStatus(status:string) {
+    },
+    updateStatus(status: string) {
         return instance.put(`profile/status`, {status})
             .then(response => response.data)
     }

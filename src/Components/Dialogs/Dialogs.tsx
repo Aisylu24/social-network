@@ -2,8 +2,7 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
-import {reduxForm} from "redux-form";
-import {AddMessageForm} from "./AddMessageForm/AddMessageForm";
+import {AddMessageFormRedux} from "./AddMessageForm/AddMessageForm";
 
 type DialogType = {
     id: number
@@ -25,11 +24,12 @@ type DialogPropsType = {
 }
 
 const Dialogs = (props: DialogPropsType) => {
-
+ 
     let dialogElements = props.dialogsPage.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>)
     let messageElements = props.dialogsPage.messages.map(m => <Message key={m.id} message={m.message}/>)
 
     const addNewMessage = (values: any) => {
+     
         props.addMessage(values.newMessage)
     }
 
@@ -47,4 +47,3 @@ const Dialogs = (props: DialogPropsType) => {
 export default Dialogs;
 
 
-const AddMessageFormRedux = reduxForm({form: 'dialogAddMessageForm'})(AddMessageForm)

@@ -13,6 +13,7 @@ let mapStateToProps = (state: AppStateType)=> {
 }
 
 let mapDispatchToProps = (dispatch: (action: ActionsType) => void) => {
+     
     return {
         addMessage: (newMessage:string)=> {
             dispatch(addMessageAC(newMessage))

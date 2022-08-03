@@ -13,7 +13,8 @@ const Header = (props: HeaderPropsType)=> {
                 alt="meow"/>
 
             <div className={classes.loginBlock}>
-                {props.isAuth ? props.userLogin
+                {props.isAuth
+                    ? <div> {props.login}  <button onClick={props.logoutThunkCreator}>Log out</button></div>
                     : <NavLink to={'/login'}>Login</NavLink> }
 
             </div>
