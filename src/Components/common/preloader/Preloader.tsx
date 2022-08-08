@@ -1,10 +1,11 @@
 import React from 'react';
-import loader from "../../Users/loader.svg";
+import {ReactComponent as Loader} from "./loader.svg";
+import s from "./Preloader.module.css"
 
 const Preloader = () => {
     return (
         <div>
-            <img src={loader} alt={'loader'}/>
+          <Loader className={s.loader}/>
         </div>
     );
 };

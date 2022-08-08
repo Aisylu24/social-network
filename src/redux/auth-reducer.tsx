@@ -33,7 +33,7 @@ export const setAuthUserData = (payload: DataStateType) => ({type: SET_USER_DATA
 
 export const getAuthUserDataThunkCreator = () => {
     const thunk = (dispatch: (action:ActionsType)=> void) => {
-        authMeAPI.authMe()
+      return authMeAPI.authMe()
             .then(data => {
                 if (data.resultCode === 0) {
                     dispatch(setAuthUserData({...data.data, isAuth: true}))
