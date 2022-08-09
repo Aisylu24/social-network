@@ -1,4 +1,4 @@
-import {ActionsType} from "./redux-store";
+import {ActionsType} from "./store/redux-store";
 
 const ADD_MESSAGE = 'ADD-MESSAGE';
 

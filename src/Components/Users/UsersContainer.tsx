@@ -2,11 +2,18 @@ import React from 'react'
 import {connect} from "react-redux";
 import {followThunkCreator, getUsersThunkCreator, switchFollowingProgress,
     unfollowThunkCreator, UserType} from "../../redux/users-reducer";
-import {AppStateType} from "../../redux/redux-store";
+import {AppStateType} from "../../redux/store/redux-store";
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
 import {compose} from "redux";
 import {withAuthNavigate} from "../../hoc/withAuthNavigate";
+import {
+    getCurrentPage,
+    getIsFetching, getIsFollowing,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../redux/selector/users-selectors";
 
 type UsersContainerPropsType = MapStateToPropsType & MapDispatchPropsType
 
@@ -56,12 +63,12 @@ type MapDispatchPropsType = {
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        isFollowing: state.usersPage.isFollowing
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        isFollowing: getIsFollowing(state)
     }
 }
 

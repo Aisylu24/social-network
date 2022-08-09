@@ -1,7 +1,7 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {addPostAC, profileReducer, setStatus, setUserProfile} from "./profile-reducer";
-import {addMessageAC, dialogsReducer} from "./dialogs-reducer";
-import {sidebarReducer} from "./sidebar-reducer";
+import {addPostAC, profileReducer, setStatus, setUserProfile} from "../profile-reducer";
+import {addMessageAC, dialogsReducer} from "../dialogs-reducer";
+import {sidebarReducer} from "../sidebar-reducer";
 import {
     setFollow,
     setCurrentPage,
@@ -10,11 +10,11 @@ import {
     switchFetching, switchFollowingProgress,
     setUnfollow,
     usersReducer
-} from "./users-reducer";
-import {authReducer, setAuthUserData} from "./auth-reducer";
+} from "../users-reducer";
+import {authReducer, setAuthUserData} from "../auth-reducer";
 import thunkMiddleware from 'redux-thunk'
 import {reducer as formReducer} from 'redux-form'
-import {appReducer, initializedSuccessfully} from "../app-reducer";
+import {appReducer, initializedSuccessfully} from "../../app-reducer";
 
 
 let rootReducer = combineReducers({

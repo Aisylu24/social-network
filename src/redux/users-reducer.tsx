@@ -1,4 +1,4 @@
-import {ActionsType} from "./redux-store";
+import {ActionsType} from "./store/redux-store";
 import {usersAPI} from "../api/api";
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -83,12 +83,12 @@ export const switchFollowingProgress = (isFollowingProgress: boolean, userId: nu
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
 const thunk = (dispatch: (action:ActionsType)=> void) => {
-    dispatch(switchFetching(true))
 
-    //if (this.props.users.length === 0) {
+    dispatch(switchFetching(true))
+    dispatch(setCurrentPage(currentPage))
+
     usersAPI.getUsers(currentPage,pageSize)
         .then(data => {
-            dispatch(setCurrentPage(currentPage))
             dispatch(switchFetching(false))
             dispatch(setUsers(data.items))
             dispatch(setTotalCount(data.totalCount))

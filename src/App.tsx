@@ -10,7 +10,7 @@ import {LoginContainer} from "./Components/Login/Login";
 import {initializeAppTC} from "./app-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import Preloader from "./Components/common/preloader/Preloader";
-import {AppStateType} from "./redux/redux-store";
+import {AppStateType} from "./redux/store/redux-store";
 
 
 const App = () => {

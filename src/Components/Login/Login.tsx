@@ -5,7 +5,7 @@ import {Element} from "../common/FormsControls/FormControls";
 import {connect} from "react-redux";
 import {loginThunkCreator, logoutThunkCreator} from "../../redux/auth-reducer";
 import {useNavigate} from "react-router-dom";
-import {AppStateType} from "../../redux/redux-store";
+import {AppStateType} from "../../redux/store/redux-store";
 import s from "../common/FormsControls/FormControls.module.css"
 
 type FormDataType = {

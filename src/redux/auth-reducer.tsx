@@ -1,4 +1,4 @@
-import {ActionsType} from "./redux-store";
+import {ActionsType} from "./store/redux-store";
 import {authMeAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 

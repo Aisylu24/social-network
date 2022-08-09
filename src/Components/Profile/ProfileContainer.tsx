@@ -7,7 +7,7 @@ import {
     ProfileType,
     updateUserStatusThunkCreator
 } from "../../redux/profile-reducer";
-import {AppStateType} from "../../redux/redux-store";
+import {AppStateType} from "../../redux/store/redux-store";
 import {Params, useParams} from "react-router-dom";
 import {withAuthNavigate} from "../../hoc/withAuthNavigate";
 import {compose} from "redux";

@@ -1,4 +1,4 @@
-import {ActionsType} from "./redux-store";
+import {ActionsType} from "./store/redux-store";
 import {profileAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST';
