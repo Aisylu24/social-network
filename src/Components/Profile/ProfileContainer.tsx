@@ -41,12 +41,13 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 class ProfileRequestContainer extends React.Component<ProfileRequestContainerPropsType> {
 
     componentDidMount() {
-        // let userId = this.props.params.userId // string
-        // if(!userId) {
-        //  userId = this.props.isAuthUserId // number
-        // // }
-        this.props.getUserProfileThunkCreator(this.props.params.userId)
-        this.props.getUserStatusThunkCreator(this.props.params.userId)
+        let userId = this.props.params.userId // string | undefined
+        if(!userId) {
+             if (this.props.isAuthUserId)
+            userId = this.props.isAuthUserId.toString() // number | null
+        }
+        this.props.getUserProfileThunkCreator(userId)
+        this.props.getUserStatusThunkCreator(userId)
     }
 
     render() {
