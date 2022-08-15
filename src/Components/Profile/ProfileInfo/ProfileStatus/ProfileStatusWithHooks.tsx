@@ -9,6 +9,10 @@ const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
 
     const [state, setState] = useState({editMode: false, status: props.status})
 
+    useEffect(() => {
+        setState({...state, status: props.status})
+    }, [props.status])
+
     const activateEditMode = () => {
         setState({...state, editMode: true})
     }
@@ -21,10 +25,6 @@ const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
             setState({...state, status: e.currentTarget.value})
     }
-
-    useEffect(() => {
-        setState({...state, status: props.status})
-    }, [props.status])
 
     return (
         <div>
