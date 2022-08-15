@@ -5,7 +5,8 @@ type ProfileStatusPropsType = {
     updateUserStatus: (status: string) => void
 }
 
-const ProfileStatus = (props: ProfileStatusPropsType) => {
+const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
+
     const [state, setState] = useState({editMode: false, status: props.status})
 
     const activateEditMode = () => {
@@ -47,4 +48,4 @@ const ProfileStatus = (props: ProfileStatusPropsType) => {
     );
 };
 
-export default ProfileStatus;
+export default ProfileStatusWithHooks;
