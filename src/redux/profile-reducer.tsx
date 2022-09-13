@@ -2,6 +2,7 @@ import {ActionsType} from "./store/redux-store";
 import {profileAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST';
+const DELETE_POST = 'DELETE-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 
@@ -48,7 +49,13 @@ let initialState:ProfilePageType = {
     status: ""
 }
 
-export const profileReducer = (state:ProfilePageType = initialState, action: ActionsType):ProfilePageType => {
+export type ProfileActionsType = ReturnType<typeof setStatus>
+| ReturnType<typeof addPostAC>
+| ReturnType<typeof deletePostAC>
+| ReturnType<typeof setUserProfile>
+
+
+export const profileReducer = (state:ProfilePageType = initialState, action: ProfileActionsType):ProfilePageType => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
@@ -62,6 +69,10 @@ export const profileReducer = (state:ProfilePageType = initialState, action: Act
             }
             return stateCopy
         }
+        case DELETE_POST: {
+
+            return {...state, posts: state.posts.filter(post => post.id !== action.postId)}
+        }
         case SET_USER_PROFILE: {
             return {...state, profile: action.profile}
         }
@@ -74,6 +85,7 @@ export const profileReducer = (state:ProfilePageType = initialState, action: Act
 }
 
 export const addPostAC = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
+export const deletePostAC = (postId: number) => ({type: DELETE_POST, postId} as const)
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
 

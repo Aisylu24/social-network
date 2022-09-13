@@ -1,5 +1,5 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {addPostAC, profileReducer, setStatus, setUserProfile} from "../profile-reducer";
+import {ProfileActionsType, profileReducer} from "../profile-reducer";
 import {addMessageAC, dialogsReducer} from "../dialogs-reducer";
 import {sidebarReducer} from "../sidebar-reducer";
 import {
@@ -33,18 +33,16 @@ export type AppStateType = ReturnType<typeof rootReducer>
 export let store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
 export type ActionsType = ReturnType<typeof addMessageAC>
-    | ReturnType<typeof addPostAC>
     | ReturnType<typeof setFollow>
     | ReturnType<typeof setUnfollow>
     | ReturnType<typeof setUsers>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalCount>
     | ReturnType<typeof switchFetching>
-    | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setAuthUserData>
     | ReturnType<typeof switchFollowingProgress>
-    | ReturnType<typeof setStatus>
     | ReturnType<typeof initializedSuccessfully>
+    | ProfileActionsType
 
 
 // @ts-ignore
