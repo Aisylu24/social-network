@@ -30,10 +30,8 @@ export const initializedSuccessfully = () => ({type: INITIALIZED_SUCCESSFULLY} a
 
 export const initializeAppTC = () => {
     const thunk = (dispatch: any) => {
-        console.log('thunk')
       let promise = dispatch(getAuthUserDataThunkCreator())
         promise.then(()=> {
-            console.log('initializedSuccessfully')
             dispatch(initializedSuccessfully())
         })
 

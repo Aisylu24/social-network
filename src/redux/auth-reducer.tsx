@@ -7,7 +7,7 @@ const SET_USER_DATA = 'SET_USER_DATA';
 export type DataStateType = {
     id: null | number
     email: null | string
-    login: null |string
+    login: null | string
     isAuth: boolean
 }
 
@@ -31,41 +31,28 @@ export const authReducer = (state: DataStateType = initialState, action: Actions
 
 export const setAuthUserData = (payload: DataStateType) => ({type: SET_USER_DATA, payload} as const)
 
-export const getAuthUserDataThunkCreator = () => {
-    const thunk = (dispatch: (action:ActionsType)=> void) => {
-      return authMeAPI.authMe()
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(setAuthUserData({...data.data, isAuth: true}))
-                }
-            })
+export const getAuthUserDataThunkCreator = () => async (dispatch: (action: ActionsType) => void) => {
+    let data = await authMeAPI.authMe()
+    if (data.resultCode === 0) {
+        let {id, login, email} = data.data
+        dispatch(setAuthUserData({id, login, email, isAuth: true}))
     }
-    return thunk
 }
 
-export const loginThunkCreator = (email:string, login:string, rememberMe:boolean) => (dispatch:any)  => {
-
-        authMeAPI.login(email, login, rememberMe)
-            .then(data => {
-                console.log(data);
-                if (data.resultCode === 0) {
-                    dispatch(getAuthUserDataThunkCreator())
-                } else {
-                    let message = data.messages.length > 0 ? data.messages[0] : 'Some error'
-                    dispatch(stopSubmit('login', {_error: message}))
-                }
-            })
+export const loginThunkCreator = (email: string, login: string, rememberMe: boolean) => async (dispatch: any) => {
+    let data = await authMeAPI.login(email, login, rememberMe)
+    if (data.resultCode === 0) {
+        dispatch(getAuthUserDataThunkCreator())
+    } else {
+        let message = data.messages.length > 0 ? data.messages[0] : 'Some error'
+        dispatch(stopSubmit('login', {_error: message}))
     }
+}
 
-export const logoutThunkCreator = () => {
-    const thunk = (dispatch: (action: { payload: DataStateType; type: string }) => void) => {
-        authMeAPI.logout()
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(setAuthUserData({id: null, email: null, login: null, isAuth: false}))
-                }
-            })
+export const logoutThunkCreator = () => async (dispatch: (action: { payload: DataStateType; type: string }) => void) => {
+    let data = await authMeAPI.logout()
+    if (data.resultCode === 0) {
+        dispatch(setAuthUserData({id: null, email: null, login: null, isAuth: false}))
     }
-    return thunk
 }
 

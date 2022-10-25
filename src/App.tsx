@@ -14,20 +14,12 @@ import {AppStateType} from "./redux/store/redux-store";
 
 
 const App = () => {
-    console.log('App')
     let initialized = useSelector<AppStateType, boolean>(state => state.app.initialized)
-    console.log(initialized)
     let dispatch = useDispatch()
 
     useEffect(() => {
-        debugger
-        console.log('useEfff')
         dispatch(initializeAppTC());
     }, [])
-
-    // if (!initialized) {
-    //     return <Preloader/>
-    // }
 
     return (
         !initialized
