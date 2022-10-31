@@ -65,6 +65,9 @@ const Login = (props: LoginPropsType) => {
     return (
         <div>
             <h1>Login</h1>
+            <p>Use common test account credentials:</p>
+            <p>Email: free@samuraijs.com</p>
+            <p>Password: free</p>
             <ReduxLoginForm onSubmit={onSubmit}/>
         </div>
     );
