@@ -11,7 +11,7 @@ type MyPostsPropsType = {
 
 const MyPosts: React.FC<MyPostsPropsType> = ({posts, addPost}) => {
 
-    let postElements = posts.map(p => <Post message={p.message} likes={p.likesCount}/>)
+    let postElements = posts.map((p, i) => <Post key={i} message={p.message} likes={p.likesCount}/>)
 
     const addPostHandler = (values: any) => {
         addPost(values.newPostText)

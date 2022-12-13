@@ -7,6 +7,7 @@ describe("ProfileStatusWithClass component", () => {
         const component = create(<ProfileStatusWithClass status={'Aisylu'} updateUserStatus={() => {
         }}/>);
         const instance = component.getInstance();
+        // @ts-ignore
         expect(instance.state.status).toBe("Aisylu");
     });
     test("span should be shown", () => {
@@ -44,6 +45,7 @@ describe("ProfileStatusWithClass component", () => {
         let callback = jest.fn()
         const component = create(<ProfileStatusWithClass status={'Aisylu'} updateUserStatus={callback}/>);
         const instance = component.getInstance()
+        // @ts-ignore
         instance.deactivateEditMode()
         // expect(callback.mock.calls[0][0]).toBe('Aisylu');
         expect(callback).toHaveBeenCalledWith('Aisylu');

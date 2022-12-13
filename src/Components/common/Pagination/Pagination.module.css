@@ -4,4 +4,9 @@
 
 .pages {
     cursor: pointer;
+    margin: 10px;
+}
+
+.span {
+    padding: 3px;
 }
