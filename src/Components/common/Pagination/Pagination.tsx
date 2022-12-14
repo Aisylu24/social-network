@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from "./Pagination.module.css";
 
 type PaginationPropsType = {
@@ -25,14 +25,11 @@ export const Pagination: React.FC<PaginationPropsType> = ({
     }
 
     let portionTotalCount = Math.ceil(pagesCount / portionDiapasonSize)
-    let [portionSerialNumber, setPortionSerialNumber] = useState(Math.ceil(currentPage/portionDiapasonSize))
-    // let [portionSerialNumber, setPortionSerialNumber] = useState(1)
-    console.log(portionSerialNumber)
-    console.log(currentPage)
+    let [portionSerialNumber, setPortionSerialNumber] = useState(1)
     let leftPortionPageNumber = (portionSerialNumber - 1) * portionDiapasonSize + 1
     let rightPortionPageNumber = portionSerialNumber * portionDiapasonSize
 
-    // useEffect(()=>setPortionSerialNumber(Math.ceil(currentPage/portionDiapasonSize)), [currentPage]);
+    useEffect(()=>setPortionSerialNumber(Math.ceil(currentPage/portionDiapasonSize)), [currentPage]);
 
     return (
         <div className={s.pages}>
