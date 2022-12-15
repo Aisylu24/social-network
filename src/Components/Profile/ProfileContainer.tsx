@@ -69,8 +69,10 @@ const WithUrlDataContainerComponent = (Component: ComponentType<ProfileRequestCo
     return ComponentWithParams
 }
 
-export const ProfileContainer = compose<ComponentType>(
+const ProfileContainer = compose<ComponentType>(
     connect(mapStateToProps, {getUserProfileThunkCreator,getUserStatusThunkCreator, updateUserStatusThunkCreator}),
     WithUrlDataContainerComponent,
     withAuthNavigate // const AuthNavigateComponent = withAuthNavigate(ProfileRequestContainer)
 )(ProfileRequestContainer)
+
+export default ProfileContainer

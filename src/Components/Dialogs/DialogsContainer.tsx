@@ -13,7 +13,7 @@ let mapStateToProps = (state: AppStateType)=> {
 }
 
 let mapDispatchToProps = (dispatch: (action: ActionsType) => void) => {
-     
+
     return {
         addMessage: (newMessage:string)=> {
             dispatch(addMessageAC(newMessage))
@@ -21,7 +21,9 @@ let mapDispatchToProps = (dispatch: (action: ActionsType) => void) => {
     }
 }
 
-export const DialogsContainer = compose<ComponentType>(
+const DialogsContainer = compose<ComponentType>(
     connect(mapStateToProps, mapDispatchToProps),
     withAuthNavigate // const AuthNavigateComponent = withAuthNavigate(Dialogs)
 )(Dialogs)
+
+export default DialogsContainer;
