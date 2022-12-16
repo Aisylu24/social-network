@@ -9,7 +9,7 @@
     grid-template-columns: 1fr 12fr;
 }
 
-s.bodyWrapperContent {
+.bodyWrapperContent {
     grid-area: content;
     background-color: mistyrose;
 }

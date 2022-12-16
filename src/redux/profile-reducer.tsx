@@ -5,6 +5,7 @@ const ADD_POST = 'PROFILE/ADD-POST';
 const DELETE_POST = 'PROFILE/DELETE-POST';
 const SET_USER_PROFILE = 'PROFILE/SET_USER_PROFILE';
 const SET_STATUS = 'PROFILE/SET_STATUS';
+const SAVE_PHOTO = 'PROFILE/SAVE_PHOTO';
 
 export type ProfileType = {
     "aboutMe": string,
@@ -53,6 +54,7 @@ export type ProfileActionsType = ReturnType<typeof setStatus>
     | ReturnType<typeof addPostAC>
     | ReturnType<typeof deletePostAC>
     | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof savePhoto>
 
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsType): ProfilePageType => {
@@ -80,6 +82,9 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
         case SET_STATUS: {
             return {...state, status: action.status}
         }
+        case SAVE_PHOTO: {
+            return {...state, profile: {...state.profile, photos: action.photos}}
+        }
         default:
             return state
     }
@@ -89,6 +94,7 @@ export const addPostAC = (newPostText: string) => ({type: ADD_POST, newPostText}
 export const deletePostAC = (postId: number) => ({type: DELETE_POST, postId} as const)
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
+export const savePhoto = (photos: any) => ({type: SAVE_PHOTO, photos} as const)
 
 export const getUserProfileThunkCreator = (userIdFromParams: string | undefined) => async (dispatch: (action: ActionsType) => void) => {
     let data = await profileAPI.getUserProfile(userIdFromParams)
@@ -104,5 +110,13 @@ export const updateUserStatusThunkCreator = (status: string) => async (dispatch:
     let data = await profileAPI.updateStatus(status)
     if (data.resultCode === 0) {
         dispatch(setStatus(status))
+    }
+}
+
+export const savePhotoThunkCreator = (file: string) => async (dispatch: (action: ActionsType) => void) => {
+    let data = await profileAPI.savePhoto(file)
+
+    if (data.resultCode === 0) {
+        dispatch(savePhoto(data.photos))
     }
 }

@@ -36,7 +36,7 @@ export const authMeAPI = {
             .then(response => response.data)
     },
     login(email: string, password: string, rememberMe= false) {
-           
+
         return instance.post('auth/login', {email, password, rememberMe})
             .then((response) => {
                 return response.data
@@ -59,6 +59,16 @@ export const profileAPI = {
     },
     updateStatus(status: string) {
         return instance.put(`profile/status`, {status})
+            .then(response => response.data)
+    },
+    savePhoto(file: string) {
+        const formData = new FormData()
+        formData.append('image', file)
+        return instance.put(`profile/photo`, formData, {
+            headers: {
+                'Content-type': 'multipart/form-data'
+            }
+        })
             .then(response => response.data)
     }
 }

@@ -4,7 +4,7 @@ import Profile from "./Profile";
 import {
     getUserProfileThunkCreator,
     getUserStatusThunkCreator,
-    ProfileType,
+    ProfileType, savePhotoThunkCreator,
     updateUserStatusThunkCreator
 } from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/store/redux-store";
@@ -22,6 +22,7 @@ type MapDispatchPropsType = {
     getUserProfileThunkCreator: (userIdFromParams: string | undefined) => void
     getUserStatusThunkCreator: (userIdFromParams: string | undefined) => void
     updateUserStatusThunkCreator: (status: string) => void
+    savePhotoThunkCreator: (file: any) => void
 }
 
 type paramsType = {
@@ -40,20 +41,34 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 
 class ProfileRequestContainer extends React.Component<ProfileRequestContainerPropsType> {
 
-    componentDidMount() {
+    refreshProfile() {
         let userId = this.props.params.userId // string | undefined
-        if(!userId) {
-             if (this.props.isAuthUserId)
-            userId = this.props.isAuthUserId.toString() // number | null
+        if (!userId) {
+            if (this.props.isAuthUserId)
+                userId = this.props.isAuthUserId.toString() // number | null
         }
         this.props.getUserProfileThunkCreator(userId)
         this.props.getUserStatusThunkCreator(userId)
     }
 
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<ProfileRequestContainerPropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        if (this.props.params.userId != prevProps.params.userId) {
+            this.refreshProfile()
+        }
+    }
+
     render() {
         return (
             <div>
-                <Profile profile={this.props.profile} status={this.props.status} updateUserStatus={this.props.updateUserStatusThunkCreator}/>
+                <Profile owner={!this.props.params.userId}
+                         profile={this.props.profile}
+                         status={this.props.status}
+                         updateUserStatus={this.props.updateUserStatusThunkCreator}
+                         savePhoto={this.props.savePhotoThunkCreator}/>
             </div>
         )
     }
@@ -70,7 +85,12 @@ const WithUrlDataContainerComponent = (Component: ComponentType<ProfileRequestCo
 }
 
 const ProfileContainer = compose<ComponentType>(
-    connect(mapStateToProps, {getUserProfileThunkCreator,getUserStatusThunkCreator, updateUserStatusThunkCreator}),
+    connect(mapStateToProps, {
+        getUserProfileThunkCreator,
+        getUserStatusThunkCreator,
+        updateUserStatusThunkCreator,
+        savePhotoThunkCreator
+    }),
     WithUrlDataContainerComponent,
     withAuthNavigate // const AuthNavigateComponent = withAuthNavigate(ProfileRequestContainer)
 )(ProfileRequestContainer)
