@@ -85,7 +85,7 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
             return {...state, status: action.status}
         }
         case SAVE_PHOTO: {
-            return {...state, profile: {...state.profile, photos: action.photos} as ProfileType }
+            return {...state, profile: {...state.profile,  photos: {...state.profile?.photos, large: action.photos.large}} as ProfileType }
         }
         default:
             return state
@@ -119,6 +119,6 @@ export const savePhotoThunkCreator = (file: File) => async (dispatch: (action: A
     let data = await profileAPI.savePhoto(file)
 
     if (data.resultCode === 0) {
-        dispatch(savePhoto(data.photos))
+        dispatch(savePhoto(data.data.photos))
     }
 }

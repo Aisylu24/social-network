@@ -22,7 +22,7 @@ type MapDispatchPropsType = {
     getUserProfileThunkCreator: (userIdFromParams: string | undefined) => void
     getUserStatusThunkCreator: (userIdFromParams: string | undefined) => void
     updateUserStatusThunkCreator: (status: string) => void
-    savePhotoThunkCreator: (file: any) => void
+    savePhotoThunkCreator: (file: File) => void
 }
 
 type paramsType = {
