@@ -23,10 +23,13 @@ export type ProfileType = {
     "lookingForAJobDescription": string
     "fullName": string
     "userId": number
-    "photos": {
-        "small": null | string
-        "large": null | string
-    }
+    "photos": PhotosType
+}
+
+export type PhotosType = {
+    "small": null | string
+    "large": null | string
+
 }
 
 export type ProfilePageType = {
@@ -73,7 +76,6 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
             return stateCopy
         }
         case DELETE_POST: {
-
             return {...state, posts: state.posts.filter(post => post.id !== action.postId)}
         }
         case SET_USER_PROFILE: {
@@ -83,7 +85,7 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
             return {...state, status: action.status}
         }
         case SAVE_PHOTO: {
-            return {...state, profile: {...state.profile, photos: action.photos}}
+            return {...state, profile: {...state.profile, photos: action.photos} as ProfileType }
         }
         default:
             return state
@@ -94,7 +96,7 @@ export const addPostAC = (newPostText: string) => ({type: ADD_POST, newPostText}
 export const deletePostAC = (postId: number) => ({type: DELETE_POST, postId} as const)
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
-export const savePhoto = (photos: any) => ({type: SAVE_PHOTO, photos} as const)
+export const savePhoto = (photos: PhotosType) => ({type: SAVE_PHOTO, photos} as const)
 
 export const getUserProfileThunkCreator = (userIdFromParams: string | undefined) => async (dispatch: (action: ActionsType) => void) => {
     let data = await profileAPI.getUserProfile(userIdFromParams)
@@ -113,7 +115,7 @@ export const updateUserStatusThunkCreator = (status: string) => async (dispatch:
     }
 }
 
-export const savePhotoThunkCreator = (file: string) => async (dispatch: (action: ActionsType) => void) => {
+export const savePhotoThunkCreator = (file: File) => async (dispatch: (action: ActionsType) => void) => {
     let data = await profileAPI.savePhoto(file)
 
     if (data.resultCode === 0) {
